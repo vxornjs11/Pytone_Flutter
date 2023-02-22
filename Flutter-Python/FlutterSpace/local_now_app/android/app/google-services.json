@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "175372171586",
+    "project_id": "localnow-ac7cd",
+    "storage_bucket": "localnow-ac7cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175372171586:android:8b72d0b0dad9f5cf59b0db",
+        "android_client_info": {
+          "package_name": "com.example.local_now_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "175372171586-2lfr9lfkp0kog825t8bt74bkd5sben84.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCl6BNnqQW5T2nTfTr0DFdU8OflMWhjyCI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "175372171586-2lfr9lfkp0kog825t8bt74bkd5sben84.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
