@@ -45,6 +45,7 @@ dependencies:
   cloud_firestore: ^4.4.3
   syncfusion_flutter_sliders: ^20.4.51
   syncfusion_flutter_charts: ^20.4.51
+  kakao_flutter_sdk_share: ^1.4.0
 
 dev_dependencies:
   flutter_test:

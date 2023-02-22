@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:local_now_app/Seoul/seoul.dart';
 import 'package:local_now_app/newsScrapy/news_main.dart';
 
+import 'kakao_link/map.dart';
+
 class Home extends StatelessWidget {
   const Home({super.key});
 
@@ -45,7 +47,8 @@ class Home extends StatelessWidget {
                 child: const Text('예진')),
             ElevatedButton(
                 onPressed: () {
-                  //
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => KaKaos()));
                 },
                 child: const Text('태권')),
           ],
