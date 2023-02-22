@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:local_now_app/Seoul/seoul_all_chart.dart';
-import 'package:local_now_app/Widget/custom_loader.dart';
+import 'package:local_now_app/seoul/seoul_all_chart.dart';
 
-import '../Model/message_seoul.dart';
+import '../models/message_seoul.dart';
+import '../widgets/custom_loader.dart';
 
 class SeoulChart extends StatefulWidget {
   // final String resultList;
@@ -96,7 +96,9 @@ class _SeoulChartState extends State<SeoulChart> {
                     // Loader 3초 후 다음 단계 실행
                     onLoad = true;
                     Future.delayed(const Duration(seconds: 3), () {
-                      onLoad = false;
+                      setState(() {
+                        onLoad = false;
+                      });
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -141,7 +143,7 @@ class _SeoulChartState extends State<SeoulChart> {
       gridData: FlGridData(
         show: true,
         drawVerticalLine: true,
-        horizontalInterval: 0.2, // 가로축 간격 표시
+        horizontalInterval: 0.1, // 가로축 간격 표시
         verticalInterval: 1,
         getDrawingHorizontalLine: (value) {
           return FlLine(
@@ -172,14 +174,14 @@ class _SeoulChartState extends State<SeoulChart> {
             getTitlesWidget: bottomTitleWidgets,
           ),
         ),
-        // leftTitles: AxisTitles(
-        //   sideTitles: SideTitles(
-        //     showTitles: true,
-        //     interval: 1,
-        //     getTitlesWidget: leftTitleWidgets,
-        //     reservedSize: 42,
-        //   ),
-        // ),
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            interval: 0.1,
+            // getTitlesWidget: leftTitleWidgets,
+            reservedSize: 36,
+          ),
+        ),
       ),
       borderData: FlBorderData(
         show: true,

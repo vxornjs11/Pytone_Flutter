@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-import '../Model/message_seoul.dart';
+import '../models/message_seoul.dart';
 
 class SeoulAllChart extends StatefulWidget {
   // final String resultList;
@@ -34,7 +34,7 @@ class _SeoulAllChartState extends State<SeoulAllChart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("${MessageSeoul.gungu}의 년도별 차트"),
+        title: const Text("서울시 군구별 년도별 차트"),
       ),
       body: Center(
         child: AspectRatio(
@@ -49,10 +49,10 @@ class _SeoulAllChartState extends State<SeoulAllChart> {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     alignment: Alignment.topCenter,
-                    child: Text(
-                      "${MessageSeoul.gungu}의 년도별 차트",
+                    child: const Text(
+                      "서울시 군구별 년도별 차트",
                       // widget.title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -90,7 +90,7 @@ class _SeoulAllChartState extends State<SeoulAllChart> {
       gridData: FlGridData(
         show: true,
         drawVerticalLine: true,
-        horizontalInterval: 0.2, // 가로축 간격 표시
+        horizontalInterval: 0.1, // 가로축 간격 표시
         verticalInterval: 1,
         getDrawingHorizontalLine: (value) {
           return FlLine(
@@ -121,14 +121,14 @@ class _SeoulAllChartState extends State<SeoulAllChart> {
             getTitlesWidget: bottomTitleWidgets,
           ),
         ),
-        // leftTitles: AxisTitles(
-        //   sideTitles: SideTitles(
-        //     showTitles: true,
-        //     interval: 1,
-        //     getTitlesWidget: leftTitleWidgets,
-        //     reservedSize: 42,
-        //   ),
-        // ),
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            interval: 0.1,
+            // getTitlesWidget: leftTitleWidgets,
+            reservedSize: 36,
+          ),
+        ),
       ),
       borderData: FlBorderData(
         show: true,
@@ -141,7 +141,7 @@ class _SeoulAllChartState extends State<SeoulAllChart> {
       minY: -0.2,
       maxY: 1.2,
       lineBarsData: [
-        for(int j = 0; j < gunguList.length; j++)
+        for (int j = 0; j < gunguList.length; j++)
           LineChartBarData(
             // ******* (x,y)의 좌표 설정하기 *******
             spots: [
