@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:local_now_app/Seoul/seoul.dart';
+import 'package:local_now_app/newsScrapy/news_main.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -21,12 +22,20 @@ class Home extends StatelessWidget {
                 child: const Text('상혁')),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Seoul(),));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Seoul(),
+                      ));
                 },
                 child: const Text('상원')),
             ElevatedButton(
                 onPressed: () {
-                  //
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const newsMain(),
+                      ));
                 },
                 child: const Text('호식')),
             ElevatedButton(
