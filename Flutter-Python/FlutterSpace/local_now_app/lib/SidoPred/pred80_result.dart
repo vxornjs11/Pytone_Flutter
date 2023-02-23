@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:local_now_app/Widget/survey_result_chart.dart';
 
-import '../Widget/gauge.dart';
+import '../widgets/gauge.dart';
+import '../widgets/survey_result_chart.dart';
 // import 'dart:convert';
 // import 'package:http/http.dart' as http;
 

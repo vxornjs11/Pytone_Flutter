@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:local_now_app/Model/message_sido.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+
+import '../models/message_sido.dart';
 
 class Gauge extends StatefulWidget {
   const Gauge({super.key});

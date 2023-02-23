@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:local_now_app/Widget/line_chart2.dart';
+import 'package:local_now_app/widgets/line_chart2.dart';
 
 // import 'line_chart2.dart';
 // import 'package:my_test_project_app/line_chart1.dart';
