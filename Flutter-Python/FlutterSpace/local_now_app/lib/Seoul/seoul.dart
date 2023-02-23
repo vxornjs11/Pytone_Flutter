@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:local_now_app/Seoul/seoul_chart.dart';
-import 'package:local_now_app/Widget/custom_loader.dart';
+import 'package:local_now_app/seoul/seoul_chart.dart';
 
-import '../Model/message_seoul.dart';
+import '../models/message_seoul.dart';
+import '../widgets/custom_loader.dart';
 
 class Seoul extends StatefulWidget {
   const Seoul({super.key});
@@ -81,6 +82,17 @@ class _SeoulState extends State<Seoul> {
                   //   backgroundImage: AssetImage('images/$result.jpg'),
                   //   radius: 100,
                   // ),
+                  //// ---------
+                  CupertinoPicker(
+                      itemExtent: 30,
+                      onSelectedItemChanged: (value) {
+                        //
+                      },
+                      children: [
+                        //
+                      ])
+
+                  //// ---------
                 ],
               ),
             ),

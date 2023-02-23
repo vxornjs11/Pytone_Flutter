@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:local_now_app/Seoul/seoul.dart';
-import 'package:local_now_app/newsScrapy/news_main.dart';
+import 'package:local_now_app/seoul/seoul.dart';
+import 'package:local_now_app/news_scrapy/news_main.dart';
+import 'package:local_now_app/survey/first_page.dart';
+
+import 'kakao_link/map.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -17,7 +20,11 @@ class Home extends StatelessWidget {
           children: [
             ElevatedButton(
                 onPressed: () {
-                  //
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FirstPage(),
+                      ));
                 },
                 child: const Text('상혁')),
             ElevatedButton(
@@ -45,7 +52,8 @@ class Home extends StatelessWidget {
                 child: const Text('예진')),
             ElevatedButton(
                 onPressed: () {
-                  //
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => KaKaos()));
                 },
                 child: const Text('태권')),
           ],
