@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+// import 'package:local_now_app/hosikTest/testMain%EC%9E%A0%EC%8B%9C%EC%A0%95%EC%A7%80.dart';
+import 'package:local_now_app/hosikTest/testMain.dart';
 import 'package:local_now_app/newsScrapy/browser.dart';
 
 class newsMain extends StatelessWidget {
@@ -60,6 +62,23 @@ class _HomeBodyState extends State<HomeBody> {
                       onPressed: () => getJSONData('충청'),
                       child: const Text(
                         '충청도  뉴스',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      // onPressed: getJSONData(),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const hosikTestMain(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'test Main',
                       ),
                     ),
                   ),
