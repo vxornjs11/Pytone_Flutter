@@ -7,7 +7,7 @@ import 'package:kakao_flutter_sdk_share/kakao_flutter_sdk_share.dart';
 
 void main() async {
   KakaoSdk.init(
-    nativeAppKey: '',
+    nativeAppKey: '667d213d75444eed962843327e23e34a',
   );
   runApp(const MyApp());
   await Firebase.initializeApp(
