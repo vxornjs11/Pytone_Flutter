@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:local_now_app/Seoul/seoul.dart';
+import 'package:local_now_app/SidoPred/pred80.dart';
 import 'package:local_now_app/newsScrapy/news_main.dart';
 
 class Home extends StatelessWidget {
@@ -40,7 +41,11 @@ class Home extends StatelessWidget {
                 child: const Text('호식')),
             ElevatedButton(
                 onPressed: () {
-                  //
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Pred80(),
+                      ));
                 },
                 child: const Text('예진')),
             ElevatedButton(

@@ -43,6 +43,8 @@ dependencies:
   webview_flutter: ^4.0.4
   firebase_core: ^2.7.0
   cloud_firestore: ^4.4.3
+  syncfusion_flutter_gauges: ^20.4.51
+  syncfusion_flutter_sliders: ^20.4.51
 
 dev_dependencies:
   flutter_test:

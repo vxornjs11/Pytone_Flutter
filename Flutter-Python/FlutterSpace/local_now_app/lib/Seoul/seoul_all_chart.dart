@@ -141,7 +141,7 @@ class _SeoulAllChartState extends State<SeoulAllChart> {
       minY: -0.2,
       maxY: 1.2,
       lineBarsData: [
-        for(int j = 0; j < gunguList.length; j++)
+        for (int j = 0; j < gunguList.length; j++)
           LineChartBarData(
             // ******* (x,y)의 좌표 설정하기 *******
             spots: [
