@@ -1,74 +1,97 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter/src/widgets/framework.dart';
-// import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-// class List extends StatefulWidget {
-//   const List({super.key});
+class ranking extends StatefulWidget {
+  const ranking({super.key});
 
-//  ===== 박태권의 랭킹 시스템 개발 여부에 따라서 사라질지도 모름 =====
+  @override
+  State<ranking> createState() => _rankingState();
+}
 
-//   @override
-//   State<List> createState() => _ListState();
-// }
+class _rankingState extends State<ranking> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
-// class _ListState extends State<List> {
-//   late List todoList;
-//   @override
-//   void initState() {
-//     // TODO: implement initState
-//     super.initState();
-//     todoList = [] as List;
-//     // List<String> todoList = List();
-//     // todoList = ["korea", "Japen", "US"] as List;
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Column(
-//         children: [
-//           ListView.builder(
-//             itemCount: todoList.length,
-//             // 전체 몇개냐 if for colection function
-//             itemBuilder: (context, position) {
-//               // position = index 번호 length에 맞춰서 자동으로 for문 돌아.
-//               return GestureDetector(
-//                 onTap: () {
-//                   Message.workList = todoList[position].workList;
-//                   Message.imagePath = todoList[position].imagePath;
-//                   //스테틱으로 넣어줄거 보내기
-//                   Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                         builder: (context) => const DetailList(),
-//                       ));
-//                 },
-//                 child: Card(
-//                   color: position % 2 == 0
-//                       ? Colors.redAccent.shade100
-//                       : Colors.blueAccent.shade100,
-//                   child: Row(
-//                     children: [
-//                       Padding(
-//                         padding: const EdgeInsets.all(8.0),
-//                         child: Image.asset(
-//                           todoList[position].imagePath,
-//                         ),
-//                       ),
-//                       const SizedBox(
-//                         width: 20,
-//                       ),
-//                       Text(
-//                         "    ${todoList[position].workList} ",
-//                       )
-//                     ],
-//                   ),
-//                 ),
-//               );
-//             },
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("게임랭킹"),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection("ranks")
+                  .orderBy("quizPoint", descending: true)
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasData) {
+                  final snap = snapshot.data!.docs;
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    primary: false,
+                    itemCount: snap.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 60,
+                          width: 300,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black,
+                                offset: Offset(2, 2),
+                                blurRadius: 10,
+                              )
+                            ],
+                          ),
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "   ${index + 1}" +
+                                      "위  " +
+                                      snap[index]['userName'],
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(right: 20),
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  snap[index]['quizPoint'].toString() + " 점",
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                } else {
+                  return SizedBox();
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

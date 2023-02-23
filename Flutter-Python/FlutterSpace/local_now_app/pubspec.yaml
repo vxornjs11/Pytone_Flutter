@@ -48,6 +48,7 @@ dependencies:
   syncfusion_flutter_charts: ^20.4.51
   kakao_flutter_sdk_share: ^1.4.0
   flex_color_scheme: ^6.1.2 # 컬러
+  firebase_database: ^10.0.14
 
 dev_dependencies:
   flutter_test:

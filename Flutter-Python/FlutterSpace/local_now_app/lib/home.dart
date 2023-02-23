@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:local_now_app/SidoPred/pred80.dart';
 import 'package:local_now_app/seoul/seoul.dart';
 import 'package:local_now_app/news_scrapy/news_main.dart';
-import 'package:local_now_app/survey/first_page.dart';
+// import 'package:local_now_app/survey/first_page.dart';
 
 import 'kakao_link/map.dart';
 
@@ -19,15 +19,15 @@ class Home extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const FirstPage(),
-                      ));
-                },
-                child: const Text('상혁')),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //             // builder: (context) => const FirstPage(),
+            //           ));
+            //     },
+            //     child: const Text('상혁')),
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(

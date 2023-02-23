@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 import 'easygame.dart';
+import 'list.dart';
 
 class gamePage extends StatefulWidget {
   const gamePage({super.key});
@@ -33,6 +34,16 @@ class _gamePageState extends State<gamePage> {
               },
               child: const Text("Easy"),
             ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ranking(),
+                    ),
+                  );
+                },
+                child: const Text("랭킹 보기."))
           ],
         ),
       ),
