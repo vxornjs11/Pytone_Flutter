@@ -4,6 +4,9 @@ import 'firebase_options.dart';
 import 'home.dart';
 
 void main() async {
+  KakaoSdk.init(
+    nativeAppKey: '667d213d75444eed962843327e23e34a',
+  );
   runApp(const MyApp());
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
