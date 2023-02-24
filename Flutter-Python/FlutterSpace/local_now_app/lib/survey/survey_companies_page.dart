@@ -15,7 +15,7 @@ class CompanyPage extends StatefulWidget {
 class _CompanyPageState extends State<CompanyPage> {
   _CompanyPageState();
 
-  double _value5 = 0.0;
+  double _value5 = MessageAnswers.sliderCompanies;
 
   @override
   Widget build(BuildContext context) {

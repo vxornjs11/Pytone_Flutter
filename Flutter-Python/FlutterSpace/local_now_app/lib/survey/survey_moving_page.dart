@@ -14,7 +14,7 @@ class MovingPage extends StatefulWidget {
 class _MovingPageState extends State<MovingPage> {
   _MovingPageState();
 
-  double _value1 = 0.0;
+  double _value1 = MessageAnswers.sliderPop;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class _MovingPageState extends State<MovingPage> {
               //   MessageSido.sliderPop = endValue;
               // },
             ),
-            const Text('(단위 : 250000명)'),
+            const Text('(단위 : 250,000명)'),
             SizedBox(
               height: 20,
             ),

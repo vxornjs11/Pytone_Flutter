@@ -14,7 +14,7 @@ class BabyPage extends StatefulWidget {
 class _BabyPageState extends State<BabyPage> {
   _BabyPageState();
 
-  double _value2 = 0.0;
+  double _value2 = MessageAnswers.sliderBabies;
 
   @override
   Widget build(BuildContext context) {

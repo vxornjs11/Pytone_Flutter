@@ -14,7 +14,7 @@ class ObstetricsPage extends StatefulWidget {
 class _ObstetricsPageState extends State<ObstetricsPage> {
   _ObstetricsPageState();
 
-  double _value3 = 0.0;
+  double _value3 = MessageAnswers.sliderDoctor;
 
   @override
   Widget build(BuildContext context) {

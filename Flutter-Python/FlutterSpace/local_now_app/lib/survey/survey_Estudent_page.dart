@@ -14,7 +14,7 @@ class EstudentPage extends StatefulWidget {
 class _EstudentPageState extends State<EstudentPage> {
   _EstudentPageState();
 
-  double _value4 = 0.0;
+  double _value4 = MessageAnswers.sliderEStudent;
 
   @override
   Widget build(BuildContext context) {
