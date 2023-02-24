@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_now_app/home.dart';
+import 'package:local_now_app/news_scrapy/news_main.dart';
+import 'package:local_now_app/news_scrapy/topTabbarTest.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
   const CustomBottomNavBar({super.key});
@@ -22,18 +24,26 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: NavigationBar(
-
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.business, color: Colors.teal,),
+            icon: Icon(
+              Icons.business,
+              color: Colors.teal,
+            ),
             label: '',
           ),
           NavigationDestination(
-            icon: Icon(Icons.home, color: Colors.cyan,),
+            icon: Icon(
+              Icons.home,
+              color: Colors.cyan,
+            ),
             label: '',
           ),
           NavigationDestination(
-            icon: Icon(Icons.list, color: Colors.blue,),
+            icon: Icon(
+              Icons.list,
+              color: Colors.blue,
+            ),
             label: '',
           ),
         ],
@@ -50,7 +60,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
       ),
       body: <Widget>[
-        const Home(),
+        newsMain(),
         const Home(),
         const Home(),
       ][currentPageIndex],
