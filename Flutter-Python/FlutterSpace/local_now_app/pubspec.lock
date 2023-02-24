@@ -169,6 +169,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
+
   firebase_database:
     dependency: "direct main"
     description:
@@ -190,6 +191,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.1+23"
+
   fl_chart:
     dependency: "direct main"
     description:

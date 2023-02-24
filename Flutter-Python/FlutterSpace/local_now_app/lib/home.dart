@@ -45,7 +45,7 @@ class Home extends StatelessWidget {
                       SizedBox(
                         height: deviceHeight / 6,
                         child: Lottie.asset(
-                          "assets/city-skyline-building.json",
+                          "assets/train-buildings.json",
                         ),
                       ),
                       Text(
@@ -73,7 +73,7 @@ class Home extends StatelessWidget {
                       SizedBox(
                         height: deviceHeight / 6,
                         child: Lottie.asset(
-                          "assets/city-skyline-building.json",
+                          "assets/world-map.json",
                         ),
                       ),
                       Text(

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:local_now_app/SidoPred/pred80_result.dart';
 import 'package:local_now_app/models/message_pred80.dart';
@@ -51,11 +50,13 @@ class _Pred80State extends State<Pred80> {
     changeStudents = 0;
 
     count = 0;
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('latestValue')
@@ -113,6 +114,7 @@ class _Pred80State extends State<Pred80> {
           //   child: MySlider(),
           // ),
           Text('예상 전출인구 수: ${changeOutPop.round()}'),
+
           SfSlider(
             min: -100,
             max: 100,
@@ -122,6 +124,9 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
+            onChangeStart: (dynamic startValue) {
+              print('Interaction started');
+            },
             onChanged: (dynamic newValue) {
               _value1 = newValue;
               print('newValue: ${newValue.round()}');
@@ -129,13 +134,18 @@ class _Pred80State extends State<Pred80> {
               changeOutPop = outPop * (1 + (newValue / 100));
 
               print('change: ${changeOutPop.round()}');
+
               setState(() {});
             },
+            // onChangeEnd: (dynamic endValue) {
+            //   MessageSido.sliderPop = endValue;
+            // },
           ),
           const SizedBox(
             height: 20,
           ),
           Text('출생아 수: ${changeBabies.round()}'),
+
           SfSlider(
             min: -100,
             max: 100,
@@ -145,19 +155,24 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
-            onChanged: (dynamic newValue) {
-              _value2 = newValue;
-
-              int babies = message.babies;
-              changeBabies = babies * (1 + (newValue / 100));
-
-              setState(() {});
+            onChangeStart: (dynamic startValue) {
+              print('Interaction started');
             },
+            onChanged: (dynamic newValue) {
+              setState(() {
+                _value2 = newValue;
+              });
+            },
+            // onChangeEnd: (dynamic endValue) {
+            //   MessageSido.sliderBabies = endValue;
+            // },
           ),
           const SizedBox(
             height: 20,
           ),
+
           Text('산부인과 의원 수: ${changeDoctors.round()}'),
+
           SfSlider(
             min: -100,
             max: 100,
@@ -167,6 +182,9 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
+            onChangeStart: (dynamic startValue) {
+              print('Interaction started');
+            },
             onChanged: (dynamic newValue) {
               _value3 = newValue;
 
@@ -175,11 +193,16 @@ class _Pred80State extends State<Pred80> {
 
               setState(() {});
             },
+            // onChangeEnd: (dynamic endValue) {
+            //   MessageSido.sliderDoctor = endValue;
+            // },
           ),
           const SizedBox(
             height: 20,
           ),
+
           Text('초등학생 인원 수: ${changeStudents.round()}'),
+
           SfSlider(
             min: -100,
             max: 100,
@@ -189,6 +212,8 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
+
+
             onChanged: (dynamic newValue) {
               _value4 = newValue;
 
@@ -197,11 +222,14 @@ class _Pred80State extends State<Pred80> {
 
               setState(() {});
             },
+
           ),
           const SizedBox(
             height: 20,
           ),
+
           Text('도소매업 신생 기업 수: ${changeCompanies.round()}'),
+
           SfSlider(
             min: -100,
             max: 100,
@@ -211,6 +239,8 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
+
+          
             onChanged: (dynamic newValue) {
               _value5 = newValue;
 
@@ -219,9 +249,11 @@ class _Pred80State extends State<Pred80> {
 
               setState(() {});
             },
+
           ),
           const SizedBox(
             height: 50,
+
           ),
           ElevatedButton(
             style: CustomStyle().primaryButtonStyle(),
