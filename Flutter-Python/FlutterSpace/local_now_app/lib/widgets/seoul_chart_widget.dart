@@ -3,26 +3,24 @@ import 'dart:convert';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:local_now_app/seoul/seoul_all_chart.dart';
-import 'package:local_now_app/widgets/custom_style.dart';
 
 import '../models/message_seoul.dart';
-import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_loader.dart';
 
-class SeoulChart extends StatefulWidget {
-  const SeoulChart({super.key});
+class SeoulChartWidget extends StatefulWidget {
+  const SeoulChartWidget({super.key});
 
   @override
-  State<SeoulChart> createState() => _SeoulChartState();
+  State<SeoulChartWidget> createState() => _SeoulChartWidgetState();
 }
 
-class _SeoulChartState extends State<SeoulChart> {
+class _SeoulChartWidgetState extends State<SeoulChartWidget> {
   List<Color> gradientColors = [
     Colors.grey.shade700,
-    MessageSeoul.resultMap["pred_cluster"][8] >= 0.8
-        ? Colors.deepOrange
-        : Colors.black,
+    // MessageSeoul.resultMap["pred_cluster"][8] >= 0.8
+    //     ? Colors.deepOrange
+    //     : Colors.black,
+    Colors.black,
   ];
 
   //
@@ -34,104 +32,95 @@ class _SeoulChartState extends State<SeoulChart> {
   void initState() {
     // implement initState
     super.initState();
-    resultMap = MessageSeoul.resultMap;
+    // resultMap = MessageSeoul.resultMap;
     result = {};
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-          appBar: AppBar(), title: "Seoul - ${MessageSeoul.gungu}"),
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox(),
-                AspectRatio(
-                  aspectRatio: 1.00,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
-                        color: Theme.of(context)
-                            .primaryColorLight
-                            .withOpacity(0.4)),
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            alignment: Alignment.topCenter,
-                            child: Text(
-                              "${MessageSeoul.gungu}의 년도별 차트",
-                              // widget.title,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 2,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
+    return Stack(
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(),
+            AspectRatio(
+              aspectRatio: 1.00,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(16)),
+                    color:
+                        Theme.of(context).primaryColorLight.withOpacity(0.4)),
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        alignment: Alignment.topCenter,
+                        child: Text(
+                          "${MessageSeoul.gungu}의 년도별 차트",
+                          // widget.title,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 2,
                           ),
+                          textAlign: TextAlign.center,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: 18,
-                            left: 12,
-                            top: 36,
-                            bottom: 20,
-                          ),
-                          child: LineChart(mainData(resultMap["pred_cluster"])),
-                          // child: LineChart(
-                          //   showAvg
-                          //       ? avgData(widget.chartData) // 유저 평균
-                          //       : mainData(widget.chartData), // 유저 날짜별 위험도 기록
-                          // ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        right: 18,
+                        left: 12,
+                        top: 36,
+                        bottom: 20,
+                      ),
+                      child: LineChart(mainData(MessageSeoul.resultMap["pred_cluster"])),
+                      // child: LineChart(
+                      //   showAvg
+                      //       ? avgData(widget.chartData) // 유저 평균
+                      //       : mainData(widget.chartData), // 유저 날짜별 위험도 기록
+                      // ),
+                    ),
+                  ],
                 ),
-                ElevatedButton(
-                    style: CustomStyle().primaryButtonStyle(),
-                    onPressed: () async {
-                      await getJSONData();
-                      MessageSeoul.resultMap = result;
-                      // Loader 3초 후 다음 단계 실행
-                      onLoad = true;
-                      Future.delayed(const Duration(seconds: 3), () {
-                        setState(() {
-                          onLoad = false;
-                        });
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SeoulAllChart(),
-                            ));
-                        // _showDialog(context, result);
-                      });
-                    },
-                    child: const Text("서울 전체 확인"))
-              ],
+              ),
             ),
-          ),
-          CustomLoader(onLoad: onLoad)
-          // Center(
-          //       child: onLoad
-          //           ? SizedBox(
-          //               width: 200,
-          //               child: Lottie.network(
-          //                   'https://assets4.lottiefiles.com/packages/lf20_7x45GFUqeu.json'),
-          //               // 'https://assets7.lottiefiles.com/packages/lf20_c5vj9laj.json'),
-          //             )
-          //           : const SizedBox()),
-        ],
-      ),
+            // ElevatedButton(
+            //     style: CustomStyle().primaryButtonStyle(),
+            //     onPressed: () async {
+            //       await getJSONData();
+            //       MessageSeoul.resultMap = result;
+            //       // Loader 3초 후 다음 단계 실행
+            //       onLoad = true;
+            //       Future.delayed(const Duration(seconds: 3), () {
+            //         setState(() {
+            //           onLoad = false;
+            //         });
+            //         Navigator.push(
+            //             context,
+            //             MaterialPageRoute(
+            //               builder: (context) => const SeoulAllChart(),
+            //             ));
+            //         // _showDialog(context, result);
+            //       });
+            //     },
+            //     child: const Text("서울 전체 확인"))
+          ],
+        ),
+        CustomLoader(onLoad: onLoad)
+        // Center(
+        //       child: onLoad
+        //           ? SizedBox(
+        //               width: 200,
+        //               child: Lottie.network(
+        //                   'https://assets4.lottiefiles.com/packages/lf20_7x45GFUqeu.json'),
+        //               // 'https://assets7.lottiefiles.com/packages/lf20_c5vj9laj.json'),
+        //             )
+        //           : const SizedBox()),
+      ],
     );
   }
 

@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../models/message_seoul.dart';
+import '../widgets/custom_app_bar.dart';
 
 class SeoulAllChart extends StatefulWidget {
   // final String resultList;
@@ -33,9 +34,7 @@ class _SeoulAllChartState extends State<SeoulAllChart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("서울시 군구별 년도별 차트"),
-      ),
+      appBar: CustomAppBar(appBar: AppBar(), title: 'Seoul'),
       body: Center(
         child: AspectRatio(
           aspectRatio: 1.00,
@@ -116,7 +115,7 @@ class _SeoulAllChartState extends State<SeoulAllChart> {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 24,
+            reservedSize: 36,
             interval: 1,
             getTitlesWidget: bottomTitleWidgets,
           ),
@@ -126,7 +125,7 @@ class _SeoulAllChartState extends State<SeoulAllChart> {
             showTitles: true,
             interval: 0.1,
             // getTitlesWidget: leftTitleWidgets,
-            reservedSize: 38,
+            reservedSize: 36,
           ),
         ),
       ),
@@ -229,7 +228,7 @@ class _SeoulAllChartState extends State<SeoulAllChart> {
     const style = TextStyle(
       color: Colors.black,
       // fontWeight: FontWeight.bold,
-      fontSize: 14,
+      fontSize: 12,
       letterSpacing: -1,
     );
     // 위젯 텍스트 선언
