@@ -45,7 +45,7 @@ class Home extends StatelessWidget {
                       SizedBox(
                         height: deviceHeight / 6,
                         child: Lottie.asset(
-                          "assets/city-skyline-building.json",
+                          "assets/train-buildings.json",
                         ),
                       ),
                       Text(
@@ -56,34 +56,34 @@ class Home extends StatelessWidget {
                   ),
                 ),
               ),
-              // GestureDetector(
-              //   onTap: () => Navigator.push(
-              //       context,
-              //       // MaterialPageRoute(
-              //         // builder: (context) => const Pred80(),
-              //       )),
-              // child: Container(
-              //   width: double.infinity,
-              //   height: deviceHeight / 4.3,
-              //   decoration: CustomStyle()
-              //       .primaryBoxStyle(Colors.purple[200]!.withOpacity(0.6)),
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //     children: [
-              //       SizedBox(
-              //         height: deviceHeight / 6,
-              //         child: Lottie.asset(
-              //           "assets/city-skyline-building.json",
-              //         ),
-              //       ),
-              //       Text(
-              //         '전국의 지역별 추이',
-              //         style: CustomStyle().primaryTextStyle(Colors.teal[900]),
-              //       )
-              //     ],
-              //   ),
-              // ),
-              // ),
+              GestureDetector(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Pred80(),
+                    )),
+                child: Container(
+                  width: double.infinity,
+                  height: deviceHeight / 4.3,
+                  decoration: CustomStyle()
+                      .primaryBoxStyle(Colors.purple[200]!.withOpacity(0.6)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                        height: deviceHeight / 6,
+                        child: Lottie.asset(
+                          "assets/world-map.json",
+                        ),
+                      ),
+                      Text(
+                        '전국의 지역별 추이',
+                        style: CustomStyle().primaryTextStyle(Colors.teal[900]),
+                      )
+                    ],
+                  ),
+                ),
+              ),
               GestureDetector(
                 onTap: () => Navigator.push(
                     context,
