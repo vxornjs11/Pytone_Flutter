@@ -14,29 +14,30 @@ class BabyPage extends StatefulWidget {
 class _BabyPageState extends State<BabyPage> {
   _BabyPageState();
 
-  double _value2 = 0.0;
+  double _value2 = MessageAnswers.sliderBabies;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("출생아 숫자는"),
+          title: const Text("나만의 지역에서 출생아 숫자는?"),
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('출생아 수는?'),
+            // const Text('출생아 수는?'),
             Lottie.asset('images/pregnant-woman.zip'),
             //LottieImageAsset(width: 0, height: 0, i
 
             SfSlider(
-              min: -100,
-              max: 100,
+              min: 0,
+              max: 8,
               value: _value2,
               showDividers: true,
-              interval: 25,
+              interval: 1,
               showLabels: true,
               showTicks: true,
-              stepSize: 25,
+              stepSize: 1,
               onChangeStart: (dynamic startValue) {
                 print('Interaction started');
               },
@@ -48,6 +49,7 @@ class _BabyPageState extends State<BabyPage> {
               //   MessageSido.sliderPop = endValue;
               // },
             ),
+            const Text('(단위 : 15,000명)'),
             SizedBox(
               height: 20,
             ),
