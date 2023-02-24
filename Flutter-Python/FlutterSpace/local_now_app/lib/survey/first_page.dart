@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:local_now_app/survey/second_page.dart';
+import 'package:local_now_app/survey/survey_moving_page.dart';
 import 'package:lottie/lottie.dart';
 
 class FirstPage extends StatefulWidget {
@@ -30,7 +30,7 @@ class _FirstPageState extends State<FirstPage> {
             ),
             // Load a Lottie file from your assets
             Lottie.asset(
-                'images/98427-10832-my-dream-inspection-graphics-and-animations-v071.zip'),
+                'images/my-dream-inspection-graphics-and-animations-v071.zip'),
             //LottieImageAsset(width: 0, height: 0, id: id, fileName: fileName, dirName: dirName)
             // Load a Lottie file from your assets
             ElevatedButton(
@@ -51,7 +51,7 @@ class _FirstPageState extends State<FirstPage> {
                 ),
               ),
             ),
-            Lottie.asset('images/99546-loupe-on-map.json'),
+            Lottie.asset('images/loupe-on-map.zip'),
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(

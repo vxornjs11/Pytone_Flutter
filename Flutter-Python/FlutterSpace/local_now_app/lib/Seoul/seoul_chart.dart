@@ -4,12 +4,13 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:local_now_app/seoul/seoul_all_chart.dart';
+import 'package:local_now_app/widgets/custom_style.dart';
 
 import '../models/message_seoul.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_loader.dart';
 
 class SeoulChart extends StatefulWidget {
-  // final String resultList;
   const SeoulChart({super.key});
 
   @override
@@ -18,8 +19,10 @@ class SeoulChart extends StatefulWidget {
 
 class _SeoulChartState extends State<SeoulChart> {
   List<Color> gradientColors = [
-    const Color(0xff23b6e6),
-    const Color(0xff02d39a),
+    Colors.grey.shade700,
+    MessageSeoul.resultMap["pred_cluster"][8] >= 0.8
+        ? Colors.deepOrange
+        : Colors.black,
   ];
 
   //
@@ -38,77 +41,84 @@ class _SeoulChartState extends State<SeoulChart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("${MessageSeoul.gungu}의 년도별 차트"),
-      ),
+      appBar: CustomAppBar(
+          appBar: AppBar(), title: "Seoul - ${MessageSeoul.gungu}"),
       body: Stack(
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AspectRatio(
-                aspectRatio: 1.00,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(16)),
-                      color: Theme.of(context).primaryColorLight),
-                  child: Stack(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          alignment: Alignment.topCenter,
-                          child: Text(
-                            "${MessageSeoul.gungu}의 년도별 차트",
-                            // widget.title,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 2,
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox(),
+                AspectRatio(
+                  aspectRatio: 1.00,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
+                        color: Theme.of(context)
+                            .primaryColorLight
+                            .withOpacity(0.4)),
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            alignment: Alignment.topCenter,
+                            child: Text(
+                              "${MessageSeoul.gungu}의 년도별 차트",
+                              // widget.title,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 2,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          right: 18,
-                          left: 12,
-                          top: 36,
-                          bottom: 20,
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 18,
+                            left: 12,
+                            top: 36,
+                            bottom: 20,
+                          ),
+                          child: LineChart(mainData(resultMap["pred_cluster"])),
+                          // child: LineChart(
+                          //   showAvg
+                          //       ? avgData(widget.chartData) // 유저 평균
+                          //       : mainData(widget.chartData), // 유저 날짜별 위험도 기록
+                          // ),
                         ),
-                        child: LineChart(mainData(resultMap["pred_cluster"])),
-                        // child: LineChart(
-                        //   showAvg
-                        //       ? avgData(widget.chartData) // 유저 평균
-                        //       : mainData(widget.chartData), // 유저 날짜별 위험도 기록
-                        // ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              ElevatedButton(
-                  onPressed: () async {
-                    await getJSONData();
-                    MessageSeoul.resultMap = result;
-                    // Loader 3초 후 다음 단계 실행
-                    onLoad = true;
-                    Future.delayed(const Duration(seconds: 3), () {
-                      setState(() {
-                        onLoad = false;
+                ElevatedButton(
+                    style: CustomStyle().primaryButtonStyle(),
+                    onPressed: () async {
+                      await getJSONData();
+                      MessageSeoul.resultMap = result;
+                      // Loader 3초 후 다음 단계 실행
+                      onLoad = true;
+                      Future.delayed(const Duration(seconds: 3), () {
+                        setState(() {
+                          onLoad = false;
+                        });
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SeoulAllChart(),
+                            ));
+                        // _showDialog(context, result);
                       });
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SeoulAllChart(),
-                          ));
-                      // _showDialog(context, result);
-                    });
-                  },
-                  child: const Text("전체 차트 보러가기"))
-            ],
+                    },
+                    child: const Text("서울 전체 확인"))
+              ],
+            ),
           ),
           CustomLoader(onLoad: onLoad)
           // Center(
@@ -169,7 +179,7 @@ class _SeoulChartState extends State<SeoulChart> {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 36,
+            reservedSize: 24,
             interval: 1,
             getTitlesWidget: bottomTitleWidgets,
           ),
@@ -179,7 +189,7 @@ class _SeoulChartState extends State<SeoulChart> {
             showTitles: true,
             interval: 0.1,
             // getTitlesWidget: leftTitleWidgets,
-            reservedSize: 36,
+            reservedSize: 38,
           ),
         ),
       ),
@@ -195,7 +205,7 @@ class _SeoulChartState extends State<SeoulChart> {
       maxY: 1.2,
       lineBarsData: [
         LineChartBarData(
-          // ******* (x,y)의 좌표 설정하기 *******
+          // **************************** (x,y)의 좌표 설정하기 ****************************
           spots: [
             // FlSpot(1, chartData[0]),
             for (int i = 0; i < chartData.length; i++) ...[
@@ -203,7 +213,7 @@ class _SeoulChartState extends State<SeoulChart> {
             ],
           ],
           // isCurved: true, // 커브주기
-          // gradient: LinearGradient(colors: gradientColors),
+          gradient: LinearGradient(colors: gradientColors),
           barWidth: 4,
           isStrokeCapRound: true,
           dotData: FlDotData(
@@ -213,56 +223,11 @@ class _SeoulChartState extends State<SeoulChart> {
             show: true,
             gradient: LinearGradient(
               colors: gradientColors
-                  .map((color) => color.withOpacity(0.2)) // 그래프 아래 투명도
+                  .map((color) => color.withOpacity(0.4)) // 그래프 아래 투명도
                   .toList(),
             ),
           ),
         ),
-        // LineChartBarData(
-        //   // ******* (x,y)의 좌표 설정하기 *******
-        //   spots: [
-        //     FlSpot(1, 1.2),
-        //     FlSpot(2, 1.2),
-        //   ],
-        //   // isCurved: true, // 커브주기
-        //   // gradient: LinearGradient(colors: gradientColors),
-        //   barWidth: 4,
-        //   isStrokeCapRound: true,
-        //   dotData: FlDotData(
-        //     show: true,
-        //   ), // 점 보여주기
-        //   belowBarData: BarAreaData(
-        //     show: true,
-        //     color: Colors.red,
-        //     // gradient: LinearGradient(
-        //     //   colors: gradientColors
-        //     //       .map((color) => color.withOpacity(0.2)) // 그래프 아래 투명도
-        //     //       .toList(),
-        //     // ),
-        //   ),
-        // ),
-        // LineChartBarData(
-        //   // ******* (x,y)의 좌표 설정하기 *******
-        //   spots: [
-        //     FlSpot(0, 0.8),
-        //     FlSpot(8, 0.8),
-        //   ],
-        //   // gradient: LinearGradient(colors: gradientColors),
-        //   // barWidth: 4,
-        //   // isStrokeCapRound: true,
-        //   // dotData: FlDotData(
-        //   //   show: true,
-        //   // ), // 점 보여주기
-        //   belowBarData: BarAreaData(
-        //     show: true,
-        //     // color: Colors.blue,
-        //     gradient: LinearGradient(
-        //       colors: gradientColors
-        //           .map((color) => color.withOpacity(0.2)) // 그래프 아래 투명도
-        //           .toList(),
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }
@@ -320,26 +285,23 @@ class _SeoulChartState extends State<SeoulChart> {
   }
 
   // -----------------------------------------------------------
-  // Date: 2023-01-12, SangwonKim
+  // Date: 2023-02-22, SangwonKim
   // Desc: 하단 텍스트
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
       color: Colors.black,
-      // fontWeight: FontWeight.bold,
-      fontSize: 12,
+      fontSize: 14,
       letterSpacing: -1,
     );
     // 위젯 텍스트 선언
     Widget text = const Text('');
 
-    // Date: 2023-01-13, SangwonKim
+    // Date: 2023-02-22, SangwonKim
     // Desc: 년도 가져오기
     for (int i = 0; i < MessageSeoul.resultMap['년도'].length; i++) {
       if (value.toInt() == i) {
         text = Text(
-          // orderby date로 가져올때 사용 ***
           MessageSeoul.resultMap['년도'][i].toString(),
-
           style: style,
         );
       }

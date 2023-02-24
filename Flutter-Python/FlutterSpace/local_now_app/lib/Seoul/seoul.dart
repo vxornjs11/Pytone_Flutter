@@ -4,9 +4,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:local_now_app/seoul/seoul_chart.dart';
+import 'package:local_now_app/widgets/seoul_chart_widget.dart';
+import 'package:lottie/lottie.dart';
 
 import '../models/message_seoul.dart';
+import '../seoul/seoul_all_chart.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_loader.dart';
+import '../widgets/custom_style.dart';
+
+// Create on 2023-02-21
+// author: Sangwon Kim
+// Description: 서울 군구별 안내 페이지
 
 class Seoul extends StatefulWidget {
   const Seoul({super.key});
@@ -22,90 +31,163 @@ class _SeoulState extends State<Seoul> {
   late String gungu;
   late Map<String, dynamic> result;
   late bool onLoad = false;
+  late int selectedItem; // 피커뷰 번호
+  late bool dataOnOff; // 첫 단계일때 로티먼저 보여주기
+  late List imageName;
 
   @override
   void initState() {
     // implement initState
     super.initState();
+    gungu = '종로구';
     gunguController = TextEditingController();
     result = {};
+    selectedItem = 0; // 초기값
+    getJSONData();
+    dataOnOff = false;
+    imageName = [
+      '종로구',
+      '중구',
+      '용산구',
+      '성동구',
+      '광진구',
+      '동대문구',
+      '중랑구',
+      '성북구',
+      '강북구',
+      '도봉구',
+      '노원구',
+      '은평구',
+      '서대문구',
+      '마포구',
+      '양천구',
+      '강서구',
+      '구로구',
+      '금천구',
+      '영등포구',
+      '동작구',
+      '관악구',
+      '서초구',
+      '강남구',
+      '송파구',
+      '강동구'
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
+    final deviceWidth = MediaQuery.of(context).size.width;
+    final deviceHeight = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Seoul 군구별 차트'),
-          elevation: 0.1,
-          centerTitle: true,
-        ),
+        appBar: CustomAppBar(appBar: AppBar(), title: 'Seoul'),
         body: Stack(
           children: [
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // 피커뷰로 바꿔주기
-                  // 왼쪽에는 구별 이미지 바뀌는거 보여주기
-                  TextField(
-                      controller: gunguController,
-                      decoration: const InputDecoration(labelText: '군구'),
-                      keyboardType: TextInputType.text // 소수점찍기<<
-                      // keyboardType: const TextInputType.numberWithOptions(decimal: true) // 소수점찍기<<
+                  dataOnOff == false
+                      ? Lottie.asset("assets/city-skyline.json")
+                      : const SeoulChartWidget(),
+                  // const SeoulChartWidget(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.asset(
+                          'images/seoul/${imageName[selectedItem]}.jpeg',
+                          width: deviceWidth / 2.3,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                  const SizedBox(
-                    height: 30,
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Theme.of(context)
+                                .primaryColorLight
+                                .withOpacity(0.4),
+                            borderRadius: BorderRadius.circular(20)),
+                        width: deviceWidth / 2.3,
+                        height: 200,
+                        child: CupertinoPicker(
+                          itemExtent: 30,
+                          scrollController:
+                              FixedExtentScrollController(initialItem: 0),
+                          onSelectedItemChanged: (value) {
+                            setState(() {
+                              selectedItem = value;
+                            });
+                          },
+                          children: [
+                            for (int i = 0; i < imageName.length; i++) ...[
+                              Text(imageName[i])
+                            ]
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      gungu = gunguController.text;
-                      await getJSONData();
-                      MessageSeoul.gungu = gungu;
-                      MessageSeoul.resultMap = result;
-                      // Loader 3초 후 다음 단계 실행
-                      onLoad = true;
-                      Future.delayed(const Duration(seconds: 3), () {
-                        onLoad = false;
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SeoulChart(),
-                            ));
-                        _showDialog(context, result);
-                      });
-                    },
-                    child: const Text('입력'),
-                  ),
-                  // CircleAvatar(
-                  //   backgroundImage: AssetImage('images/$result.jpg'),
-                  //   radius: 100,
-                  // ),
-                  //// ---------
-                  CupertinoPicker(
-                      itemExtent: 30,
-                      onSelectedItemChanged: (value) {
-                        //
-                      },
-                      children: [
-                        //
-                      ])
+                  // Text('Selected Item: ${imageName[selectedItem]}'),
 
-                  //// ---------
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        style: CustomStyle().primaryButtonStyle(),
+                        onPressed: () async {
+                          //
+                          gungu = imageName[selectedItem];
+                          //
+                          await getJSONData();
+                          // Loader 3초 후 다음 단계 실행
+                          onLoad = true;
+                          Future.delayed(const Duration(seconds: 3), () {
+                            setState(() {
+                              MessageSeoul.gungu = gungu;
+                              MessageSeoul.resultMap = result;
+                              onLoad = false;
+                              dataOnOff = true;
+                            });
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) => const SeoulChart(),
+                            //     ));
+                            // _showDialog(context, result);
+                          });
+                        },
+                        child: const Text('OK'),
+                      ),
+                      ElevatedButton(
+                          style: CustomStyle().primaryButtonStyle(),
+                          onPressed: () async {
+                            await getJSONData();
+                            MessageSeoul.resultMap = result;
+                            // Loader 3초 후 다음 단계 실행
+                            onLoad = true;
+                            Future.delayed(const Duration(seconds: 3), () {
+                              setState(() {
+                                onLoad = false;
+                              });
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const SeoulAllChart(),
+                                  ));
+                              // _showDialog(context, result);
+                            });
+                          },
+                          child: const Text("서울 전체 확인"))
+                    ],
+                  ),
                 ],
               ),
             ),
+            // 커스텀로더
             CustomLoader(onLoad: onLoad)
-            // Center(
-            //     child: onLoad
-            //         ? SizedBox(
-            //             width: 200,
-            //             child: Lottie.network(
-            //                 'https://assets4.lottiefiles.com/packages/lf20_7x45GFUqeu.json'),
-            //             // 'https://assets7.lottiefiles.com/packages/lf20_c5vj9laj.json'),
-            //           )
-            //         : const SizedBox()),
           ],
         ),
       ),
