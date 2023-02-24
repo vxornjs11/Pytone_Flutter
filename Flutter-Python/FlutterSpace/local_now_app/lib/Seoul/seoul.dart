@@ -30,6 +30,7 @@ class _SeoulState extends State<Seoul> {
   // late String imageName;
   late String gungu;
   late Map<String, dynamic> result;
+  late Map<String, dynamic> resultAll;
   late bool onLoad = false;
   late int selectedItem; // 피커뷰 번호
   late bool dataOnOff; // 첫 단계일때 로티먼저 보여주기
@@ -40,9 +41,8 @@ class _SeoulState extends State<Seoul> {
     // implement initState
     super.initState();
     gungu = '종로구';
-    gunguController = TextEditingController();
     result = {};
-    selectedItem = 0; // 초기값
+    selectedItem = 0;
     getJSONData();
     dataOnOff = false;
     imageName = [
@@ -78,78 +78,116 @@ class _SeoulState extends State<Seoul> {
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
     final deviceHeight = MediaQuery.of(context).size.height;
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        appBar: CustomAppBar(appBar: AppBar(), title: 'Seoul'),
-        body: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  dataOnOff == false
-                      ? Lottie.asset("assets/city-skyline.json")
-                      : const SeoulChartWidget(),
-                  // const SeoulChartWidget(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.asset(
-                          'images/seoul/${imageName[selectedItem]}.jpeg',
-                          width: deviceWidth / 2.3,
-                          height: 200,
-                          fit: BoxFit.cover,
-                        ),
+    return Scaffold(
+      appBar: CustomAppBar(appBar: AppBar(), title: 'Seoul'),
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                dataOnOff == false
+                    ? Lottie.asset("assets/city-skyline.json")
+                    : SeoulChartWidget(resultMap: result, gungu: gungu),
+                // const SeoulChartWidget(),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.asset(
+                        'images/seoul/${imageName[selectedItem]}.jpeg',
+                        width: deviceWidth / 2.22,
+                        height: deviceHeight / 3.8,
+                        fit: BoxFit.cover,
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Theme.of(context)
-                                .primaryColorLight
-                                .withOpacity(0.4),
-                            borderRadius: BorderRadius.circular(20)),
-                        width: deviceWidth / 2.3,
-                        height: 200,
-                        child: CupertinoPicker(
-                          itemExtent: 30,
-                          scrollController:
-                              FixedExtentScrollController(initialItem: 0),
-                          onSelectedItemChanged: (value) {
-                            setState(() {
-                              selectedItem = value;
-                            });
-                          },
-                          children: [
-                            for (int i = 0; i < imageName.length; i++) ...[
-                              Text(imageName[i])
-                            ]
-                          ],
-                        ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Theme.of(context)
+                              .primaryColorLight
+                              .withOpacity(0.4),
+                          borderRadius: BorderRadius.circular(20)),
+                      width: deviceWidth / 2.22,
+                      height: deviceHeight / 3.8,
+                      child: CupertinoPicker(
+                        itemExtent: 30,
+                        scrollController:
+                            FixedExtentScrollController(initialItem: 0),
+                        onSelectedItemChanged: (value) {
+                          setState(() {
+                            selectedItem = value;
+                          });
+                        },
+                        children: [
+                          for (int i = 0; i < imageName.length; i++) ...[
+                            Text(imageName[i])
+                          ]
+                        ],
                       ),
-                    ],
-                  ),
-                  // Text('Selected Item: ${imageName[selectedItem]}'),
+                    ),
+                  ],
+                ),
+                // Text('Selected Item: ${imageName[selectedItem]}'),
 
-                  Row(
-                    children: [
-                      ElevatedButton(
-                        style: CustomStyle().primaryButtonStyle(),
-                        onPressed: () async {
-                          //
-                          gungu = imageName[selectedItem];
-                          //
-                          await getJSONData();
+                Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                        // style: CustomStyle().primaryButtonStyle(),
+                        style: TextButton.styleFrom(
+                            textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                        )),
+                        onPressed: () {
                           // Loader 3초 후 다음 단계 실행
-                          onLoad = true;
-                          Future.delayed(const Duration(seconds: 3), () {
-                            setState(() {
-                              MessageSeoul.gungu = gungu;
-                              MessageSeoul.resultMap = result;
+                          setState(() {
+                            onLoad = true;
+                          });
+                          Future.delayed(
+                            const Duration(seconds: 2),
+                            () async {
+                              dataOnOff = false;
+                              await getJSONDataAll();
+                              // setState(() {
+                              // MessageSeoul.resultMap = result;
                               onLoad = false;
+                              // });
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const SeoulAllChart(),
+                                  ));
+                              // _showDialog(context, result);
+                            },
+                          );
+                        },
+                        child: const Text("서울전체")),
+                    ElevatedButton(
+                      style: CustomStyle().primaryButtonStyle(),
+                      onPressed: () {
+                        //
+                        print("before: $result");
+                        // Loader 3초 후 다음 단계 실행
+                        setState(() {
+                          onLoad = true;
+                        });
+                        Future.delayed(
+                          const Duration(seconds: 2),
+                          () {
+                            setState(() {
                               dataOnOff = true;
+                              gungu = imageName[selectedItem];
+                              getJSONData();
+
+                              // MessageSeoul.gungu = gungu;
+                              // MessageSeoul.resultMap = result;
+
+                              onLoad = false;
                             });
                             // Navigator.push(
                             //     context,
@@ -157,39 +195,19 @@ class _SeoulState extends State<Seoul> {
                             //       builder: (context) => const SeoulChart(),
                             //     ));
                             // _showDialog(context, result);
-                          });
-                        },
-                        child: const Text('OK'),
-                      ),
-                      ElevatedButton(
-                          style: CustomStyle().primaryButtonStyle(),
-                          onPressed: () async {
-                            await getJSONData();
-                            MessageSeoul.resultMap = result;
-                            // Loader 3초 후 다음 단계 실행
-                            onLoad = true;
-                            Future.delayed(const Duration(seconds: 3), () {
-                              setState(() {
-                                onLoad = false;
-                              });
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const SeoulAllChart(),
-                                  ));
-                              // _showDialog(context, result);
-                            });
                           },
-                          child: const Text("서울 전체 확인"))
-                    ],
-                  ),
-                ],
-              ),
+                        );
+                      },
+                      child: const Text('    OK    '),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            // 커스텀로더
-            CustomLoader(onLoad: onLoad)
-          ],
-        ),
+          ),
+          // 커스텀로더
+          CustomLoader(onLoad: onLoad)
+        ],
       ),
     );
   }
@@ -202,6 +220,19 @@ class _SeoulState extends State<Seoul> {
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
       result = dataConvertedJSON['result'];
+      print("after: $result");
+    });
+    // _showDialog(context, result);
+  }
+
+  getJSONDataAll() async {
+    var url = Uri.parse('http://127.0.0.1:5000/gungu_all');
+
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      resultAll = dataConvertedJSON['result'];
+      MessageSeoul.resultMap = resultAll;
     });
     // _showDialog(context, result);
   }
