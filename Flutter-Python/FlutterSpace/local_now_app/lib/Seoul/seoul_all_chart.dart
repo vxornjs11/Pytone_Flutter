@@ -28,6 +28,7 @@ class _SeoulAllChartState extends State<SeoulAllChart> {
     // implement initState
     super.initState();
     resultMap = MessageSeoul.resultMap;
+    print(resultMap);
     gunguList = resultMap['군구'];
   }
 

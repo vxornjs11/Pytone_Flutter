@@ -8,20 +8,17 @@ import '../models/message_seoul.dart';
 import '../widgets/custom_loader.dart';
 
 class SeoulChartWidget extends StatefulWidget {
-  const SeoulChartWidget({super.key});
+  final Map<String, dynamic> resultMap;
+  final String gungu;
+  const SeoulChartWidget(
+      {super.key, required this.resultMap, required this.gungu});
 
   @override
   State<SeoulChartWidget> createState() => _SeoulChartWidgetState();
 }
 
 class _SeoulChartWidgetState extends State<SeoulChartWidget> {
-  List<Color> gradientColors = [
-    Colors.grey.shade700,
-    // MessageSeoul.resultMap["pred_cluster"][8] >= 0.8
-    //     ? Colors.deepOrange
-    //     : Colors.black,
-    Colors.black,
-  ];
+  late List<Color> gradientColors;
 
   //
   late final Map<String, dynamic> resultMap; // 가져온 해당 군구 데이터
@@ -32,12 +29,27 @@ class _SeoulChartWidgetState extends State<SeoulChartWidget> {
   void initState() {
     // implement initState
     super.initState();
-    // resultMap = MessageSeoul.resultMap;
+    // resultMap = widget.resultMap;
     result = {};
+    print(widget.resultMap["pred_rcluster"]);
+    // gradientColors = widget.resultMap["pred_cluster"][8] >= 0.67 &&
+    //           widget.resultMap["pred_cluster"][8] != null
+    //       ? [Colors.redAccent, Colors.red]
+    //       : widget.resultMap["pred_cluster"][8] >= 0.33 &&
+    //           widget.resultMap["pred_cluster"][8] != null
+    //           ? [Colors.orangeAccent, Colors.orange]
+    //           : [Colors.grey.shade500, Colors.black];
   }
 
   @override
   Widget build(BuildContext context) {
+    gradientColors = (widget.resultMap["pred_cluster"][8] >= 0.67 &&
+            widget.resultMap["pred_cluster"][8] != null)
+        ? [Colors.redAccent, Colors.red]
+        : (widget.resultMap["pred_cluster"][8] >= 0.33 &&
+                widget.resultMap["pred_cluster"][8] != null)
+            ? [Colors.orangeAccent, Colors.orange]
+            : [Colors.grey.shade500, Colors.black];
     return Stack(
       children: [
         Column(
@@ -58,7 +70,7 @@ class _SeoulChartWidgetState extends State<SeoulChartWidget> {
                       child: Container(
                         alignment: Alignment.topCenter,
                         child: Text(
-                          "${MessageSeoul.gungu}의 년도별 차트",
+                          "${widget.gungu}의 년도별 차트",
                           // widget.title,
                           style: const TextStyle(
                             color: Colors.black,
@@ -77,7 +89,8 @@ class _SeoulChartWidgetState extends State<SeoulChartWidget> {
                         top: 36,
                         bottom: 20,
                       ),
-                      child: LineChart(mainData(MessageSeoul.resultMap["pred_cluster"])),
+                      child:
+                          LineChart(mainData(widget.resultMap["pred_cluster"])),
                       // child: LineChart(
                       //   showAvg
                       //       ? avgData(widget.chartData) // 유저 평균
@@ -92,7 +105,7 @@ class _SeoulChartWidgetState extends State<SeoulChartWidget> {
             //     style: CustomStyle().primaryButtonStyle(),
             //     onPressed: () async {
             //       await getJSONData();
-            //       MessageSeoul.resultMap = result;
+            //       widget.resultMap = result;
             //       // Loader 3초 후 다음 단계 실행
             //       onLoad = true;
             //       Future.delayed(const Duration(seconds: 3), () {
@@ -287,10 +300,10 @@ class _SeoulChartWidgetState extends State<SeoulChartWidget> {
 
     // Date: 2023-02-22, SangwonKim
     // Desc: 년도 가져오기
-    for (int i = 0; i < MessageSeoul.resultMap['년도'].length; i++) {
+    for (int i = 0; i < widget.resultMap['년도'].length; i++) {
       if (value.toInt() == i) {
         text = Text(
-          MessageSeoul.resultMap['년도'][i].toString(),
+          widget.resultMap['년도'][i].toString(),
           style: style,
         );
       }
