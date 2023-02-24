@@ -1,14 +1,18 @@
 import 'dart:convert';
 
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:local_now_app/seoul/seoul_chart.dart';
+import 'package:local_now_app/widgets/custom_buttons.dart';
 import 'package:lottie/lottie.dart';
 
 import '../models/message_seoul.dart';
 import '../widgets/custom_loader.dart';
+
+// Create on 2023-02-21
+// author: Sangwon Kim
+// Description: 서울 군구별 안내 페이지
 
 class Seoul extends StatefulWidget {
   const Seoul({super.key});
@@ -31,6 +35,7 @@ class _SeoulState extends State<Seoul> {
   void initState() {
     // implement initState
     super.initState();
+    gungu = '종로구';
     gunguController = TextEditingController();
     result = {};
     selectedItem = 0; // 초기값
@@ -88,10 +93,13 @@ class _SeoulState extends State<Seoul> {
     //   "Songpa_gu",
     //   "Gangdong_gu"
     // ];
+    // CustomButtonStyle customButtonStyle = CustomButtonStyle();
   }
 
   @override
   Widget build(BuildContext context) {
+    final deviceWidth = MediaQuery.of(context).size.width;
+    final deviceHeight = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -105,6 +113,7 @@ class _SeoulState extends State<Seoul> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // 피커뷰로 바꿔주기
                   // 왼쪽에는 구별 이미지 바뀌는거 보여주기
@@ -120,37 +129,61 @@ class _SeoulState extends State<Seoul> {
                   //   radius: 100,
                   // ),
                   //// ---------
-                  Lottie.network("https://assets1.lottiefiles.com/packages/lf20_aEtcq1Z1up.json"),
-                  // Image.asset(
-                  //   // 'images/${imageName[selectedItem]}',
-                  //   'images/dream_TradingCard.jpg',
-                  //   // width: 150,
-                  //   height: 300,
-                  // ),
-                  Text('Selected Item: ${imageName[selectedItem]}'),
-                  SizedBox(
-                    // width: 200,
-                    height: 200,
-                    child: CupertinoPicker(
-                      // backgroundColor: Theme.of(context).primaryColorLight,
-                      itemExtent: 30,
-                      onSelectedItemChanged: (value) {
-                        setState(() {
-                          selectedItem = value;
-                        });
-                      },
-                      children: [
-                        for (int i = 0; i < imageName.length; i++) ...[
-                          Text(imageName[i])
-                        ]
-                      ],
-                    ),
+                  Lottie.asset("assets/city-skyline.json"),
+                  // Lottie.network("https://assets1.lottiefiles.com/packages/lf20_aEtcq1Z1up.json"),
+                  // const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.asset(
+                          'images/seoul/${imageName[selectedItem]}.jpeg',
+                          // 'images/seoul/종로구.jpeg',
+                          width: deviceWidth / 2.3,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Theme.of(context)
+                                .primaryColorLight
+                                .withOpacity(0.4),
+                            borderRadius: BorderRadius.circular(20)),
+                        width: deviceWidth / 2.3,
+                        height: 200,
+                        child: CupertinoPicker(
+                          // backgroundColor: Theme.of(context).primaryColorLight.withOpacity(0.5),
+                          // key: UniqueKey(),
+                          itemExtent: 30,
+                          // scrollController:
+                          // FixedExtentScrollController(initialItem: 1),
+                          scrollController:
+                              FixedExtentScrollController(initialItem: 0),
+                          onSelectedItemChanged: (value) {
+                            setState(() {
+                              selectedItem = value;
+                            });
+                          },
+                          children: [
+                            for (int i = 0; i < imageName.length; i++) ...[
+                              Text(imageName[i])
+                            ]
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  
+                  // Text('Selected Item: ${imageName[selectedItem]}'),
+
                   ElevatedButton(
-                    style: ButtonStyle(
-                        minimumSize: MaterialStatePropertyAll(
-                            Size(MediaQuery.of(context).size.width, 40))),
+                    style: CustomButtonStyle().primary,
+                    // style: ElevatedButton.styleFrom(
+                    //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    //   textStyle: const TextStyle(fontSize: 20),
+                    //   minimumSize: Size(double.infinity, 50)
+                    // ),
                     onPressed: () async {
                       //
                       gungu = imageName[selectedItem];

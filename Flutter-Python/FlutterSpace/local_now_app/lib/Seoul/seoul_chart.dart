@@ -169,7 +169,7 @@ class _SeoulChartState extends State<SeoulChart> {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 36,
+            reservedSize: 24,
             interval: 1,
             getTitlesWidget: bottomTitleWidgets,
           ),
@@ -179,7 +179,7 @@ class _SeoulChartState extends State<SeoulChart> {
             showTitles: true,
             interval: 0.1,
             // getTitlesWidget: leftTitleWidgets,
-            reservedSize: 36,
+            reservedSize: 38,
           ),
         ),
       ),
@@ -326,7 +326,7 @@ class _SeoulChartState extends State<SeoulChart> {
     const style = TextStyle(
       color: Colors.black,
       // fontWeight: FontWeight.bold,
-      fontSize: 12,
+      fontSize: 14,
       letterSpacing: -1,
     );
     // 위젯 텍스트 선언
