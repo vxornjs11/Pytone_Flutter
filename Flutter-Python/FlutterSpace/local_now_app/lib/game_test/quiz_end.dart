@@ -4,7 +4,7 @@ import 'package:local_now_app/game_test/easygame.dart';
 import 'package:local_now_app/game_test/list.dart';
 import 'package:local_now_app/home.dart';
 import 'package:local_now_app/widgets/custom_app_bar.dart';
-import 'package:local_now_app/widgets/custom_bottom_nav_bar.dart';
+import 'package:local_now_app/custom_bottom_nav_bar.dart';
 import 'package:local_now_app/widgets/custom_style.dart';
 
 import '../kakao_link/kakaoapi.dart';
