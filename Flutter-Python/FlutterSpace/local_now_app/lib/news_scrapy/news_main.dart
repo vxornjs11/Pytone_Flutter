@@ -22,7 +22,7 @@ class HomeBody extends StatefulWidget {
   State<HomeBody> createState() => _HomeBodyState();
 }
 
-late String link = "";
+// late String link = "";
 List newslist = [];
 
 // Map<String, dynamic> mapTest = {};
@@ -61,14 +61,13 @@ class _HomeBodyState extends State<HomeBody> {
                       // onPressed: getJSONData(),
                       onPressed: () => getJSONData('충청'),
                       child: const Text(
-                        '충청도  뉴스',
+                        '충청도 뉴스',
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
-                      // onPressed: getJSONData(),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -105,30 +104,23 @@ class _HomeBodyState extends State<HomeBody> {
                   return Column(
                     children: [
                       GestureDetector(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              (newslist[position].keys)
-                                  .toString()
-                                  .replaceAll(RegExp(reg), ""),
-                            ),
-                          ),
-                          onTap: () {
-                            print(
-                                "*******************************************");
-                            // print(newslist[position].values);
-                            print(newslist[1].values);
-                            String link = (newslist[position].values)
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            (newslist[position].keys)
                                 .toString()
-                                .replaceAll(
-                                    RegExp('[^a-zA-Z0-9가-힣.=/?:\\s]'), "")
-                                .substring(7);
-//http://www.ccnnews.co.kr/news/articleView.html?idxno=286073
-//http://www.ccnnews.co.kr/news/articleView.html?idxno=286073
-                            print("!! In onTap link = ${link}");
-                            // checklistFor();
-                            ClickedNotice(link);
-                          }),
+                                .replaceAll(RegExp(reg), ""),
+                          ),
+                        ),
+                        onTap: () {
+                          String link = (newslist[position].values)
+                              .toString()
+                              .replaceAll(RegExp('[^a-zA-Z0-9가-힣.=/?:\\s]'), "")
+                              .substring(7);
+                          print("!! In onTap link = ${link}");
+                          ClickedNotice(link);
+                        },
+                      ),
                     ],
                   );
                 },
@@ -163,19 +155,20 @@ class _HomeBodyState extends State<HomeBody> {
     // _showDialog(context, newslist);
 
     int i = 0;
-    while (i < newslist.length) {
+    // while (i < newslist.length) {
+    while (i < 8) {
+      // 8번째 뉴스까지만 보이게 할꺼임
       mapTest.addAll(newslist[i]);
       i++;
     }
   } //>> getJSONData(str) async { END
 
-  checklistFor() {
-    int i = 0;
-    while (i < newslist.length) {
-      print(newslist[i].values);
-      i++;
-    }
-  }
+  // checklistFor() {
+  //   int i = 0;
+  //   while (i < newslist.length) {
+  //     i++;
+  //   }
+  // }
 
   ClickedNotice(link) {
     // notice 클릭시 웹뷰

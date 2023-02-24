@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:local_now_app/models/message_answers.dart';
+// import 'package:local_now_app/models/message_answers.dart';
 import 'package:local_now_app/survey/survey_Estudent_page.dart';
 import 'package:lottie/lottie.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -54,7 +54,7 @@ class _ObstetricsPageState extends State<ObstetricsPage> {
             ElevatedButton(
               onPressed: () {
                 // 값 저장하고 결과 페이지로
-                MessageAnswers.sliderDoctor = _value3;
+                // MessageAnswers.sliderDoctor = _value3;
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
                     //생성자로 값을 넣어주는 부분! *******************
