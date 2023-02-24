@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../models/message_seoul.dart';
+import '../widgets/custom_app_bar.dart';
 
 class SeoulAllChart extends StatefulWidget {
   // final String resultList;
@@ -33,9 +34,7 @@ class _SeoulAllChartState extends State<SeoulAllChart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("서울시 군구별 년도별 차트"),
-      ),
+      appBar: CustomAppBar(appBar: AppBar(), title: 'Seoul'),
       body: Center(
         child: AspectRatio(
           aspectRatio: 1.00,
