@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:local_now_app/Model/message_last_values.dart';
+import 'package:local_now_app/Model/message_sido.dart';
 import 'package:local_now_app/SidoPred/pred80_result.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
@@ -21,31 +24,62 @@ class _Pred80State extends State<Pred80> {
   double _value4 = 0;
   double _value5 = 0;
 
+  late num changeOutPop;
+  late num changeBabies;
+  late num changeCompanies;
+  late num changeDoctors;
+  late num changeStudents;
+
   @override
   void initState() {
     super.initState();
     result = {};
-    if (FirebaseFirestore.instance.collection('latestValue').id == '서울특별시') {
-      seoul = FirebaseFirestore.instance.collection('latestValue');
-    }
+    changeOutPop = 0;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('latestValue')
+            .where('sido', isEqualTo: '서울특별시')
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CupertinoActivityIndicator());
+          }
+          final documents = snapshot.data!.docs;
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: documents.map((e) => _buildItemWidget(e)).toList(),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildItemWidget(DocumentSnapshot doc) {
+    final message = MessageLastValues(
+      sido: doc['sido'],
+      babies: doc['babies'],
+      companies: doc['companies'],
+      doctors: doc['doctors'],
+      outPop: doc['out_pop'],
+      students: doc['students'],
+    );
+    return Container(
+      // color: Colors.amber,
+      child: Column(
         children: [
-          const SizedBox(
-            height: 200,
-          ),
-          const Text('80년 후 강원도!'),
+          Text('80년 후 ${message.sido}!'),
           // // 위젯 만들면 클릭이 안 되고 바뀌지도 않음..
           // SizedBox(
           //   height: 100,
           //   width: 350,
           //   child: MySlider(),
           // ),
-          const Text('전출인구 수'),
+          Text('전출인구 수: ${message.outPop}'),
           SfSlider(
             min: -100,
             max: 100,
@@ -55,21 +89,20 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
-            onChangeStart: (dynamic startValue) {
-              print('Interaction started');
-            },
             onChanged: (dynamic newValue) {
               _value1 = newValue;
+              print('newValue: ${newValue}');
+              int outPop = message.outPop;
+              changeOutPop = outPop * (1 + (newValue / 100));
+
+              print('change: ${changeOutPop}');
               setState(() {});
             },
-            // onChangeEnd: (dynamic endValue) {
-            //   MessageSido.sliderPop = endValue;
-            // },
           ),
           const SizedBox(
             height: 20,
           ),
-          const Text('출생아 수'),
+          Text('출생아 수: ${message.babies}'),
           SfSlider(
             min: -100,
             max: 100,
@@ -79,22 +112,19 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
-            onChangeStart: (dynamic startValue) {
-              print('Interaction started');
-            },
             onChanged: (dynamic newValue) {
-              setState(() {
-                _value2 = newValue;
-              });
+              _value2 = newValue;
+
+              int babies = message.babies;
+              changeBabies = babies * (1 + (newValue / 100));
+
+              setState(() {});
             },
-            // onChangeEnd: (dynamic endValue) {
-            //   MessageSido.sliderBabies = endValue;
-            // },
           ),
           const SizedBox(
             height: 20,
           ),
-          const Text('산부인과 의원 수'),
+          Text('산부인과 의원 수: ${message.doctors}'),
           SfSlider(
             min: -100,
             max: 100,
@@ -104,22 +134,16 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
-            onChangeStart: (dynamic startValue) {
-              print('Interaction started');
-            },
             onChanged: (dynamic newValue) {
               setState(() {
                 _value3 = newValue;
               });
             },
-            // onChangeEnd: (dynamic endValue) {
-            //   MessageSido.sliderDoctor = endValue;
-            // },
           ),
           const SizedBox(
             height: 20,
           ),
-          const Text('초등학생 인원 수'),
+          Text('초등학생 인원 수: ${message.students}'),
           SfSlider(
             min: -100,
             max: 100,
@@ -129,22 +153,22 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
-            onChangeStart: (dynamic startValue) {
-              print('Interaction started');
-            },
+            // onChangeStart: (dynamic startValue) {
+            //   print('Interaction started');
+            // },
             onChanged: (dynamic newValue) {
               setState(() {
                 _value4 = newValue;
               });
             },
             // onChangeEnd: (dynamic endValue) {
-            //   MessageSido.sliderEStudent = endValue;
+            //   endValue4 = endValue;
             // },
           ),
           const SizedBox(
             height: 20,
           ),
-          const Text('도소매업 신생 기업 수'),
+          Text('도소매업 신생 기업 수: ${message.companies}'),
           SfSlider(
             min: -100,
             max: 100,
@@ -154,19 +178,19 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
-            onChangeStart: (dynamic startValue) {
-              print('Interaction started');
-            },
+            // onChangeStart: (dynamic startValue) {
+            //   print('Interaction started');
+            // },
             onChanged: (dynamic newValue) {
               setState(() {
                 _value5 = newValue;
               });
             },
             // onChangeEnd: (dynamic endValue) {
-            //   MessageSido.sliderCompanies = endValue;
+            //   endValue5 = endValue;
             // },
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           ElevatedButton(
