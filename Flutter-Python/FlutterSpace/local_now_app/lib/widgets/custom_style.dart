@@ -12,7 +12,7 @@ class CustomStyle {
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
       textStyle: const MaterialStatePropertyAll(
           TextStyle(fontSize: 24, fontWeight: FontWeight.w500)),
-      minimumSize: const MaterialStatePropertyAll(Size(100, 50)),
+      minimumSize: const MaterialStatePropertyAll(Size(double.maxFinite, 50)),
       elevation: const MaterialStatePropertyAll(2),
       overlayColor: const MaterialStatePropertyAll(Colors.teal),
     );

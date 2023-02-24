@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:local_now_app/models/message_pred80.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-
-import '../models/message_sido.dart';
 
 class Gauge extends StatefulWidget {
   const Gauge({super.key});
@@ -19,7 +16,7 @@ class _GaugeState extends State<Gauge> {
   @override
   void initState() {
     super.initState();
-    get80Value();
+    // get80Value();
   }
 
   @override
@@ -35,24 +32,23 @@ class _GaugeState extends State<Gauge> {
               endAngle: 0,
               tickOffset: 25,
               pointers: <GaugePointer>[
-                const NeedlePointer(
-                  value: 0.8,
-                ),
-                //// 이미지 포인터
-                // MarkerPointer(
-                //   value: 0.7,
-                //   markerType: MarkerType.image,
-                //   markerHeight: 35,
-                //   markerWidth: 25,
-                //   imageUrl: 'images/marker2.png',
-                // )
-                // 80년 뒤 소멸 위험도
                 MarkerPointer(
-                  value: MessageSido.value80,
-                  markerHeight: 20,
-                  markerWidth: 20,
-                  elevation: 4,
-                )
+                    value: MessagePred80.pred80,
+                    markerType: MarkerType.image,
+                    markerHeight: 30,
+                    markerWidth: 20,
+                    imageUrl: 'images/marker2.png'),
+                NeedlePointer(
+                  value: MessagePred80.change80,
+                ),
+                // 80년 뒤 소멸 위험도
+                // MarkerPointer(
+                //   value: MessagePred80.pred80,
+                //   markerHeight: 20,
+                //   markerWidth: 20,
+                //   elevation: 4,
+                //   color: Colors.black,
+                // )
               ],
               ranges: <GaugeRange>[
                 GaugeRange(
@@ -82,21 +78,5 @@ class _GaugeState extends State<Gauge> {
         ],
       ),
     );
-  }
-
-  // 이대로 변하지 않으면 80년 뒤에 예측되는 값
-  get80Value() async {
-    var url = Uri.parse('http://localhost:5000/gang?year=2103');
-    var response = await http.get(url);
-    // print(response.body);
-    // setState(() {
-    var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
-    result = dataConvertedJSON['result'];
-    // });
-
-    // 받아온 값 넣기
-    MessageSido.value80 = result['pre'];
-    print(MessageSido.value80);
-    setState(() {});
   }
 }

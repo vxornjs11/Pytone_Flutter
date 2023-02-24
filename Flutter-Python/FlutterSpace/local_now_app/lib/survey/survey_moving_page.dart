@@ -4,39 +4,40 @@ import 'package:local_now_app/survey/survey_baby_page.dart';
 import 'package:lottie/lottie.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
-class SecondPage extends StatefulWidget {
-  const SecondPage({super.key});
+class MovingPage extends StatefulWidget {
+  const MovingPage({super.key});
 
   @override
-  State<SecondPage> createState() => _SecondPageState();
+  State<MovingPage> createState() => _MovingPageState();
 }
 
-class _SecondPageState extends State<SecondPage> {
-  _SecondPageState();
+class _MovingPageState extends State<MovingPage> {
+  _MovingPageState();
 
-  double _value1 = 0.0;
+  double _value1 = MessageAnswers.sliderPop;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text(""),
+          title: const Text("나만의 지역의 전출인구 수?"),
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('전출인구 수'),
+            // const Text('전출인구 수'),
             Lottie.asset('images/moving.zip'),
             //LottieImageAsset(width: 0, height: 0, i
 
             SfSlider(
-              min: -100,
-              max: 100,
+              min: 0,
+              max: 8,
               value: _value1,
               showDividers: true,
-              interval: 25,
+              interval: 1,
               showLabels: true,
               showTicks: true,
-              stepSize: 25,
+              stepSize: 1,
               onChangeStart: (dynamic startValue) {
                 print('Interaction started');
               },
@@ -48,13 +49,14 @@ class _SecondPageState extends State<SecondPage> {
               //   MessageSido.sliderPop = endValue;
               // },
             ),
+            const Text('(단위 : 250,000명)'),
             SizedBox(
               height: 20,
             ),
             ElevatedButton(
               onPressed: () {
                 // 값 저장하고 결과 페이지로
-                MessageAnswers.sliderPop = _value1;
+                // MessageAnswers.sliderPop = _value1;
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
                     //생성자로 값을 넣어주는 부분! *******************

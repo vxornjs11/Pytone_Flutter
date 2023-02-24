@@ -109,6 +109,7 @@ class _quiz0State extends State<quiz0> {
                   } else {
                     point = 0;
                   }
+                  Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
