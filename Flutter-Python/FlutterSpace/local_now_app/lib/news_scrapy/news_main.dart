@@ -181,12 +181,12 @@ class _HomeBodyState extends State<HomeBody> {
     // notice 클릭시 웹뷰
 
     // >>>>> Click 시 PageRoute로 나오기
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => browser(name: link),
-      ),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => browser(name: link),
+    //   ),
+    // );
 
     // >> Click시 Dialog로 보이기
     // showDialog(
