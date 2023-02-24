@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:local_now_app/game_test/easygame.dart';
 import 'package:local_now_app/home.dart';
 import 'package:local_now_app/news_scrapy/news_main.dart';
 import 'package:local_now_app/news_scrapy/topTabbarTest.dart';
@@ -24,27 +25,27 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: NavigationBar(
-        destinations: const [
+        destinations: [
           NavigationDestination(
             icon: Icon(
-              Icons.business,
-              color: Colors.teal,
+              Icons.library_books,
+              color: Colors.teal[500],
             ),
-            label: '',
+            label: 'news',
           ),
           NavigationDestination(
             icon: Icon(
               Icons.home,
-              color: Colors.cyan,
+              color: Colors.deepOrange[800],
             ),
-            label: '',
+            label: 'Home',
           ),
-          NavigationDestination(
+          const NavigationDestination(
             icon: Icon(
-              Icons.list,
-              color: Colors.blue,
+              Icons.emoji_events,
+              color: Colors.indigoAccent,
             ),
-            label: '',
+            label: 'Quiz',
           ),
         ],
         selectedIndex: currentPageIndex,
@@ -54,15 +55,15 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
           });
         },
         // backgroundColor: Theme.of(context).primaryColor.withOpacity(0.3),
-        // animationDuration: const Duration(seconds: 2),
+        // animationDuration: const Duration(seconds: 1),
         height: 44,
         backgroundColor: Theme.of(context).primaryColorLight.withOpacity(0.4),
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
       ),
       body: <Widget>[
-        newsMain(),
+        const NewsMain(),
         const Home(),
-        const Home(),
+        const EasyGame(),
       ][currentPageIndex],
     );
   }

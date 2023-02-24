@@ -10,6 +10,16 @@ import '../models/message_seoul.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_loader.dart';
 
+
+
+///
+///
+/// 안쓰는 파일
+///
+///
+
+
+
 class SeoulChart extends StatefulWidget {
   const SeoulChart({super.key});
 
@@ -42,7 +52,7 @@ class _SeoulChartState extends State<SeoulChart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-          appBar: AppBar(), title: "Seoul - ${MessageSeoul.gungu}"),
+          appBar: AppBar(), title: "서울 - ${MessageSeoul.gungu}"),
       body: Stack(
         children: [
           Padding(

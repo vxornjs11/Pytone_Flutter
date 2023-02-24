@@ -3,12 +3,11 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:local_now_app/seoul/seoul_chart.dart';
-import 'package:local_now_app/widgets/seoul_chart_widget.dart';
 import 'package:lottie/lottie.dart';
 
 import '../models/message_seoul.dart';
 import '../seoul/seoul_all_chart.dart';
+import '../seoul/seoul_chart_widget.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_loader.dart';
 import '../widgets/custom_style.dart';
@@ -79,7 +78,7 @@ class _SeoulState extends State<Seoul> {
     final deviceWidth = MediaQuery.of(context).size.width;
     final deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: CustomAppBar(appBar: AppBar(), title: 'Seoul'),
+      appBar: CustomAppBar(appBar: AppBar(), title: '서울'),
       body: Stack(
         children: [
           Padding(
@@ -88,7 +87,10 @@ class _SeoulState extends State<Seoul> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 dataOnOff == false
-                    ? Lottie.asset("assets/city-skyline.json")
+                    ? AspectRatio(
+                        aspectRatio: 1.0,
+                        child: Lottie.asset("assets/city-skyline.json"),
+                      )
                     : SeoulChartWidget(resultMap: result, gungu: gungu),
                 // const SeoulChartWidget(),
                 const SizedBox(height: 12),
@@ -108,7 +110,7 @@ class _SeoulState extends State<Seoul> {
                       decoration: BoxDecoration(
                           color: Theme.of(context)
                               .primaryColorLight
-                              .withOpacity(0.4),
+                              .withOpacity(0.3),
                           borderRadius: BorderRadius.circular(20)),
                       width: deviceWidth / 2.22,
                       height: deviceHeight / 3.8,
@@ -123,7 +125,14 @@ class _SeoulState extends State<Seoul> {
                         },
                         children: [
                           for (int i = 0; i < imageName.length; i++) ...[
-                            Text(imageName[i])
+                            Text(
+                              imageName[i],
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.teal[900],
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
                           ]
                         ],
                       ),
@@ -139,9 +148,9 @@ class _SeoulState extends State<Seoul> {
                         // style: CustomStyle().primaryButtonStyle(),
                         style: TextButton.styleFrom(
                             textStyle: const TextStyle(
-                          fontSize: 16,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
+                          // decoration: TextDecoration.underline,
                         )),
                         onPressed: () {
                           // Loader 3초 후 다음 단계 실행
@@ -157,21 +166,27 @@ class _SeoulState extends State<Seoul> {
                               // MessageSeoul.resultMap = result;
                               onLoad = false;
                               // });
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const SeoulAllChart(),
-                                  ));
                               // _showDialog(context, result);
+                              // ignore: use_build_context_synchronously
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SeoulAllChart(),
+                                ),
+                              );
                             },
                           );
                         },
-                        child: const Text("서울전체")),
+                        child: Text(
+                          "* 서울 전체 추이 보러가기 *",
+                          style: TextStyle(
+                            color: Colors.orange[700],
+                          ),
+                        )),
                     ElevatedButton(
                       style: CustomStyle().primaryButtonStyle(),
                       onPressed: () {
                         //
-                        print("before: $result");
                         // Loader 3초 후 다음 단계 실행
                         setState(() {
                           onLoad = true;
@@ -220,7 +235,7 @@ class _SeoulState extends State<Seoul> {
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
       result = dataConvertedJSON['result'];
-      print("after: $result");
+      // print("after: $result");
     });
     // _showDialog(context, result);
   }

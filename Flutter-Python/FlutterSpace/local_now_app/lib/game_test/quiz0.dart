@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:local_now_app/gametest/quiz1.dart';
+import 'package:local_now_app/game_test/quiz1.dart';
+import 'package:local_now_app/widgets/custom_app_bar.dart';
+import 'package:local_now_app/widgets/custom_style.dart';
 
-class quiz0 extends StatefulWidget {
-  const quiz0({super.key});
+class Quiz0 extends StatefulWidget {
+  const Quiz0({super.key});
 
   @override
-  State<quiz0> createState() => _quiz0State();
+  State<Quiz0> createState() => _Quiz0State();
 }
 
-class _quiz0State extends State<quiz0> {
+class _Quiz0State extends State<Quiz0> {
   late String result = "";
   late int point = 0;
   late List<String> sido = ["경기도", "제주도", "전라남도"];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(appBar: AppBar(), title: 'Quiz'),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               const SizedBox(
                 height: 90,
@@ -28,6 +30,7 @@ class _quiz0State extends State<quiz0> {
               // ignore: prefer_const_constructors
               Text(
                 "Q1. 2022년 대한민국에서 가장 지방소멸위험지수가 높은 지방은?",
+                textAlign: TextAlign.center,
                 style: const TextStyle(
                     fontSize: 25,
                     color: Colors.black,
@@ -37,7 +40,7 @@ class _quiz0State extends State<quiz0> {
                 height: 100,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   // for 반복문으로 Draggable를 실행.
                   for (String si in sido)
@@ -47,23 +50,31 @@ class _quiz0State extends State<quiz0> {
                           data: si,
                           onDraggableCanceled: (velocity, offset) {},
                           feedback: Container(
-                            width: 80,
+                            width: 100,
                             height: 50,
-                            color: Colors.green.withOpacity(0.5),
+                            decoration: CustomStyle()
+                                .primaryBoxStyle(Colors.green.withOpacity(0.5)),
                             child: const Text(
                               "저엉답은??",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 10,
+                                fontSize: 12,
                               ),
                             ),
                           ),
                           child: Container(
-                            width: 80,
+                            decoration: CustomStyle()
+                                .primaryBoxStyle(Colors.lightBlue.shade200),
+                            width: 100,
                             height: 50,
-                            color: Colors.amber,
+                            // color: Colors.amber,
                             child: Center(
-                              child: Text(si),
+                              child: Text(
+                                si,
+                                style: CustomStyle()
+                                    .secondaryTextStyle(Colors.indigo),
+                              ),
                             ),
                           ),
                         ),
@@ -84,12 +95,14 @@ class _quiz0State extends State<quiz0> {
                 builder: (BuildContext context, List<dynamic> accepted,
                     List<dynamic> rejected) {
                   return Container(
-                    // width: 200,
+                    width: 300,
                     height: 80,
-                    color: Colors.blue.shade100,
+                    decoration:
+                        CustomStyle().primaryBoxStyle(Colors.blue.shade100),
+                    // color: Colors.blue.shade100,
                     child: Center(
                       child: Text(
-                        result,
+                        result == "" ? "정답을 끌어다 놓아주세요!" : result,
                         style: const TextStyle(
                             fontSize: 25,
                             color: Colors.black,
@@ -103,17 +116,18 @@ class _quiz0State extends State<quiz0> {
                 height: 50,
               ),
               ElevatedButton(
+                style: CustomStyle().primaryButtonStyle(),
                 onPressed: () {
                   if (result == "제주도") {
                     point = 1;
                   } else {
                     point = 0;
                   }
-                  Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+                  // Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => quiz1(point),
+                      builder: (context) => Quiz1(point),
                     ),
                   );
                 },

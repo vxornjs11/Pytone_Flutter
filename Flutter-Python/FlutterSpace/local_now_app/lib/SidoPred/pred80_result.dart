@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:local_now_app/home.dart';
 
 import '../models/message_pred80.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_style.dart';
 import '../widgets/gauge.dart';
 import '../widgets/survey_result_chart.dart';
-// import 'dart:convert';
-// import 'package:http/http.dart' as http;
 
 class Pred80Result extends StatefulWidget {
   const Pred80Result({super.key});
@@ -28,6 +27,7 @@ class _Pred80ResultState extends State<Pred80Result> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(appBar: AppBar(), title: '전국'),
       body: Stack(
         children: <Widget>[
           Padding(

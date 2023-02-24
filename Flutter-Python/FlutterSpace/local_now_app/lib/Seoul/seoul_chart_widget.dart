@@ -4,7 +4,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../models/message_seoul.dart';
 import '../widgets/custom_loader.dart';
 
 class SeoulChartWidget extends StatefulWidget {
@@ -31,7 +30,7 @@ class _SeoulChartWidgetState extends State<SeoulChartWidget> {
     super.initState();
     // resultMap = widget.resultMap;
     result = {};
-    print(widget.resultMap["pred_rcluster"]);
+    // print(widget.resultMap["pred_rcluster"]);
     // gradientColors = widget.resultMap["pred_cluster"][8] >= 0.67 &&
     //           widget.resultMap["pred_cluster"][8] != null
     //       ? [Colors.redAccent, Colors.red]
@@ -70,7 +69,7 @@ class _SeoulChartWidgetState extends State<SeoulChartWidget> {
                       child: Container(
                         alignment: Alignment.topCenter,
                         child: Text(
-                          "${widget.gungu}의 년도별 차트",
+                          "${widget.gungu}의 년도-위험도 추이",
                           // widget.title,
                           style: const TextStyle(
                             color: Colors.black,

@@ -6,8 +6,6 @@ import 'package:local_now_app/widgets/custom_style.dart';
 import 'package:lottie/lottie.dart';
 
 import 'SidoPred/pred80.dart';
-import 'kakao_link/map.dart';
-import 'news_scrapy/news_main.dart';
 
 // Create on 2023-02-22
 // author: Sangwon Kim
@@ -29,16 +27,16 @@ class Home extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
-                // onTap: () => Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       // builder: (context) => const FirstPage(),
-                //     )),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FirstPage(),
+                    )),
                 child: Container(
                   width: double.infinity,
                   height: deviceHeight / 4.3,
                   decoration: CustomStyle().primaryBoxStyle(
-                      Colors.deepOrange[200]!.withOpacity(0.8)),
+                      Colors.deepOrange[300]!.withOpacity(0.8)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -66,7 +64,7 @@ class Home extends StatelessWidget {
                   width: double.infinity,
                   height: deviceHeight / 4.3,
                   decoration: CustomStyle()
-                      .primaryBoxStyle(Colors.purple[200]!.withOpacity(0.6)),
+                      .primaryBoxStyle(Colors.purple[300]!.withOpacity(0.5)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -94,15 +92,16 @@ class Home extends StatelessWidget {
                   width: double.infinity,
                   height: deviceHeight / 4.3,
                   decoration: CustomStyle()
-                      .primaryBoxStyle(Colors.indigo[300]!.withOpacity(0.8)),
+                      .primaryBoxStyle(Colors.teal[200]?.withOpacity(0.8)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SizedBox(
                         height: deviceHeight / 6,
-                        child: Lottie.asset(
-                          "assets/city-skyline-building.json",
-                        ),
+                        child: Lottie.network("https://assets1.lottiefiles.com/private_files/lf30_MK1ZRw.json"),
+                        // child: Lottie.asset(
+                        //   "assets/city-skyline-building.json",
+                        // ),
                       ),
                       Text(
                         '서울의 지역별 추이',
@@ -111,35 +110,6 @@ class Home extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const newsMain(),
-                            ));
-                      },
-                      child: const Text('호식')),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Pred80(),
-                            ));
-                      },
-                      child: const Text('예진')),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => KaKaos()));
-                      },
-                      child: const Text('태권')),
-                ],
               ),
             ],
           ),

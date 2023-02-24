@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:local_now_app/Model/message_last_values.dart';
-// import 'package:local_now_app/Model/message_sido.dart';
 import 'package:local_now_app/SidoPred/pred80_result.dart';
 import 'package:local_now_app/models/message_pred80.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/message_last_values.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_style.dart';
 
 class Pred80 extends StatefulWidget {
@@ -58,6 +57,7 @@ class _Pred80State extends State<Pred80> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(appBar: AppBar(), title: '전국'),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('latestValue')
