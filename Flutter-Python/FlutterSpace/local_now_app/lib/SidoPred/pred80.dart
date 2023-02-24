@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/message_last_values.dart';
 import '../widgets/custom_style.dart';
+import '../widgets/custom_loader.dart';
 
 class Pred80 extends StatefulWidget {
   const Pred80({super.key});
@@ -17,8 +18,8 @@ class Pred80 extends StatefulWidget {
 }
 
 class _Pred80State extends State<Pred80> {
-  // late double result;
   late CollectionReference<Map<String, dynamic>> seoul;
+
   // 슬라이더 값
   late double _value1;
   late double _value2;
@@ -33,7 +34,10 @@ class _Pred80State extends State<Pred80> {
   late num changeDoctors;
   late num changeStudents;
 
+  // 라벨에 값을 한번만 초기화해주기 위해 카운트한다.
   late int count;
+
+  late bool onLoad;
 
   @override
   void initState() {
@@ -51,6 +55,8 @@ class _Pred80State extends State<Pred80> {
     changeStudents = 0;
 
     count = 0;
+
+    onLoad = false;
   }
 
   @override
@@ -66,9 +72,14 @@ class _Pred80State extends State<Pred80> {
             return const Center(child: CupertinoActivityIndicator());
           }
           final documents = snapshot.data!.docs;
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: documents.map((e) => _buildItemWidget(e)).toList(),
+          return Stack(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: documents.map((e) => _buildItemWidget(e)).toList(),
+              ),
+              CustomLoader(onLoad: onLoad)
+            ],
           );
         },
       ),
@@ -123,9 +134,6 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
-            onChangeStart: (dynamic startValue) {
-              print('Interaction started');
-            },
             onChanged: (dynamic newValue) {
               _value1 = newValue;
               print('newValue: ${newValue.round()}');
@@ -136,9 +144,6 @@ class _Pred80State extends State<Pred80> {
 
               setState(() {});
             },
-            // onChangeEnd: (dynamic endValue) {
-            //   MessageSido.sliderPop = endValue;
-            // },
           ),
           const SizedBox(
             height: 20,
@@ -154,18 +159,16 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
-            onChangeStart: (dynamic startValue) {
-              print('Interaction started');
-            },
             onChanged: (dynamic newValue) {
-              setState(() {
-                _value2 = newValue;
-              });
+              _value2 = newValue;
+
+              int babies = message.babies;
+              changeDoctors = babies * (1 + (newValue / 100));
+
+              setState(() {});
             },
-            // onChangeEnd: (dynamic endValue) {
-            //   MessageSido.sliderBabies = endValue;
-            // },
           ),
+
           const SizedBox(
             height: 20,
           ),
@@ -181,9 +184,6 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
-            onChangeStart: (dynamic startValue) {
-              print('Interaction started');
-            },
             onChanged: (dynamic newValue) {
               _value3 = newValue;
 
@@ -192,10 +192,8 @@ class _Pred80State extends State<Pred80> {
 
               setState(() {});
             },
-            // onChangeEnd: (dynamic endValue) {
-            //   MessageSido.sliderDoctor = endValue;
-            // },
           ),
+
           const SizedBox(
             height: 20,
           ),
@@ -244,9 +242,11 @@ class _Pred80State extends State<Pred80> {
               setState(() {});
             },
           ),
+
           const SizedBox(
             height: 50,
           ),
+
           ElevatedButton(
             style: CustomStyle().primaryButtonStyle(),
             onPressed: () async {
@@ -254,12 +254,23 @@ class _Pred80State extends State<Pred80> {
               await getChangePred();
               await get80Value();
 
+              Future.delayed(const Duration(seconds: 3), () {
+                setState(() {
+                  onLoad = false;
+                });
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Pred80Result(),
+                    ));
+                // _showDialog(context, result);
+              });
               // 결과 페이지로 넘어감
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return Pred80Result();
-                },
-              ));
+              // Navigator.push(context, MaterialPageRoute(
+              //   builder: (context) {
+              //     return Pred80Result();
+              //   },
+              // ));
             },
             child: const Text('결과 확인'),
           ),

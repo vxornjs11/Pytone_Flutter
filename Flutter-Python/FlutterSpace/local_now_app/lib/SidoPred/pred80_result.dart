@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:local_now_app/home.dart';
-
 import '../models/message_pred80.dart';
 import '../widgets/custom_style.dart';
 import '../widgets/gauge.dart';
 import '../widgets/survey_result_chart.dart';
-// import 'dart:convert';
-// import 'package:http/http.dart' as http;
 
 class Pred80Result extends StatefulWidget {
   const Pred80Result({super.key});
@@ -95,10 +92,10 @@ class _Pred80ResultState extends State<Pred80Result> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        Image.asset(
-                          "images/marker2.PNG",
-                          width: 15,
-                        ),
+                        // Image.asset(
+                        //   "images/marker2.PNG",
+                        //   width: 15,
+                        // ),
                         Text(
                             '80년 후 소멸 위험도: ${MessagePred80.pred80.toStringAsFixed(2)}'),
                       ],
