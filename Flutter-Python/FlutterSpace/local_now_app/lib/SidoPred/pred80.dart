@@ -8,7 +8,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/message_last_values.dart';
 import '../widgets/custom_style.dart';
-import '../widgets/custom_loader.dart';
 
 class Pred80 extends StatefulWidget {
   const Pred80({super.key});
@@ -72,14 +71,9 @@ class _Pred80State extends State<Pred80> {
             return const Center(child: CupertinoActivityIndicator());
           }
           final documents = snapshot.data!.docs;
-          return Stack(
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: documents.map((e) => _buildItemWidget(e)).toList(),
-              ),
-              CustomLoader(onLoad: onLoad)
-            ],
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: documents.map((e) => _buildItemWidget(e)).toList(),
           );
         },
       ),
