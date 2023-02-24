@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:local_now_app/hosikTest/onclick.dart';
+import 'package:local_now_app/hosikTest/map_gra.dart';
+// import 'package:kakao_flutter_sdk_share/kakao_flutter_sdk_share.dart';
+import 'package:local_now_app/hosikTest/onPress.dart';
+import 'package:local_now_app/hosikTest/onclicked.dart';
+import '../models/hosikModel.dart';
 
 class hosikTestMain extends StatefulWidget {
   const hosikTestMain({super.key});
@@ -11,6 +15,15 @@ class hosikTestMain extends StatefulWidget {
 }
 
 class _hosikTestMainState extends State<hosikTestMain> {
+  late int year;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    year = 2020;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final med = MediaQuery.of(context).size;
@@ -18,8 +31,8 @@ class _hosikTestMainState extends State<hosikTestMain> {
       '수도권',
       '강원도',
       '충청도',
-      '전라도',
       '경상도',
+      '전라도',
       '제주도'
     ];
     return Scaffold(
@@ -38,10 +51,10 @@ class _hosikTestMainState extends State<hosikTestMain> {
                     SizedBox(
                       height: 50,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'data',
+                            '${year.toString()} 년',
                           ),
                         ],
                       ),
@@ -52,15 +65,16 @@ class _hosikTestMainState extends State<hosikTestMain> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            'data',
+                            'data222',
                           ),
                         ],
                       ),
                     ),
                     Stack(),
-                    Positioned(
-                      // top: med.height * 0.3,
-                      left: med.width * 0.5,
+                    // Positioned(
+                    //   // top: med.height * 0.5,
+                    //   left: med.width * 0.5,
+                    Center(
                       child:
                           //  Row(
                           //   // mainAxisAlignment: MainAxisAlignment.center,
@@ -76,6 +90,7 @@ class _hosikTestMainState extends State<hosikTestMain> {
                             childAspectRatio: 1 / 1, //item 의 가로 1, 세로 1 의 비율
                           ),
                           itemBuilder: (context, index) {
+                            // Hosik.localAreaIndex = index;
                             return cardBuild(context, index, hangjungGuYuk);
                           },
                         ),
@@ -83,71 +98,14 @@ class _hosikTestMainState extends State<hosikTestMain> {
                         // ],
                       ),
                     ),
-                    SizedBox(
-                      child: Text('date'),
-                    )
+                    Container(
+                      // child: AreaClicked(context),
+                      child: AreaClicked(),
+                    ),
                   ],
                 ),
               ),
             ),
     );
   }
-}
-
-Widget cardBuild(BuildContext context, int index, List<String> hangjungGuYuk) {
-  final med = MediaQuery.of(context).size;
-  return Card(
-    child: Stack(
-      children: [
-        Stack(),
-        GestureDetector(
-          onTap: () => clickedLocal,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-                minWidth: 70,
-                minHeight: 70,
-                maxWidth: double.infinity,
-                // maxWidth: med.width * 0.3,
-                maxHeight: double.infinity),
-            child: Container(
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    hangjungGuYuk[index],
-                    style: TextStyle(
-                      height: 1.0,
-                      fontSize: 20,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-              //   ],
-              // ),
-              decoration: BoxDecoration(
-                //   boxShadow: [
-                //     BoxShadow(
-                //       color: Colors.grey,
-                //       blurRadius: 150,
-                //       spreadRadius: 1,
-                //     ),
-                //   ],
-                border: Border.all(
-                  color: Colors.black,
-                  width: 1,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
-      
-      
-//
- 
-//
+} // END
