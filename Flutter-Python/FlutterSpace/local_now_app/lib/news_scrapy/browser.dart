@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:lottie/lottie.dart';
 
 class browser extends StatefulWidget {
   final String name;
@@ -20,7 +21,6 @@ class _browserState extends State<browser> {
     // TODO: implement initState
     super.initState();
     isLoading = true; // for indicator
-    // siteName = 'https://www.google.com/';
     siteName = widget.name.toString();
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -59,18 +59,11 @@ class _browserState extends State<browser> {
       body: Stack(
         children: [
           isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.red,
-                  ),
+              ? Center(
+                  child: Lottie.network(
+                      'https://assets4.lottiefiles.com/packages/lf20_7x45GFUqeu.json'), // 타자치는 애
                 )
-              : Stack(
-                  // children: [
-                  //   SizedBox(
-                  //     child: Text('이상하다 뭐가 문제임 ?'),
-                  //   ),
-                  // ],
-                  ),
+              : Stack(),
           WebViewWidget(
             controller: controller,
           ),
