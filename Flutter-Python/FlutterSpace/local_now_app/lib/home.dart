@@ -32,7 +32,7 @@ class Home extends StatelessWidget {
                 // onTap: () => Navigator.push(
                 //     context,
                 //     MaterialPageRoute(
-                //       // builder: (context) => const FirstPage(),
+                //       builder: (context) => const FirstPage(),
                 //     )),
                 child: Container(
                   width: double.infinity,

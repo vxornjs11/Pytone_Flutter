@@ -22,6 +22,7 @@ class HomeBody extends StatefulWidget {
 }
 
 late bool isLoading;
+late int iindex;
 // late String link = "";
 List newslist = [];
 List viewList = [];
@@ -36,12 +37,14 @@ class _HomeBodyState extends State<HomeBody> {
     // TODO: implement initState
     super.initState();
     isLoading = false; // for indicator
+    iindex = 1;
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
+        initialIndex: iindex,
         length: 2,
         child: Scaffold(
           appBar: PreferredSize(
@@ -49,25 +52,10 @@ class _HomeBodyState extends State<HomeBody> {
             child: AppBar(
               bottom: TabBar(
                 tabs: [
-                  Container(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          imgNetworkAdress =
-                              'http://m.kwnews.co.kr/assets/images/common/logo.png';
-                          isLoading = true;
-                        });
-                        viewList = [];
-                        getJSONData('강원');
-                      },
-                      child: Tab(
-                        child: Text('강원도 뉴스'),
-                      ),
-                    ),
-                  ),
                   GestureDetector(
                     onTap: () {
                       setState(() {
+                        iindex = 0;
                         imgNetworkAdress =
                             'http://www.ccnnews.co.kr/image/logo/toplogo_20190220095446.png';
                         isLoading = true;
@@ -77,6 +65,21 @@ class _HomeBodyState extends State<HomeBody> {
                     },
                     child: const Tab(
                       child: Text('충청도 뉴스'),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        iindex = 1;
+                        imgNetworkAdress =
+                            'http://m.kwnews.co.kr/assets/images/common/logo.png';
+                        isLoading = true;
+                      });
+                      viewList = [];
+                      getJSONData('강원');
+                    },
+                    child: Tab(
+                      child: Text('강원도 뉴스'),
                     ),
                   ),
                 ],
@@ -129,9 +132,9 @@ class _HomeBodyState extends State<HomeBody> {
                     );
                   },
                 ),
-                SizedBox(
-                  child: Text('test'),
-                )
+                // SizedBox(
+                //   child: Text('test'),
+                // )
               ],
             ),
           ),

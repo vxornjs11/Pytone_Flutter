@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:local_now_app/home.dart';
 import 'package:local_now_app/news_scrapy/news_main.dart';
-import 'package:local_now_app/news_scrapy/topTabbarTest.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
   const CustomBottomNavBar({super.key});
