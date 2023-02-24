@@ -20,23 +20,24 @@ class _EstudentPageState extends State<EstudentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("초등학생 숫자"),
+          title: const Text("나만의 지역의 초등학생 숫자는?"),
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('초등학생 인구는 어느 정도가 좋을까요?'),
+            // const Text('초등학생 인구는 어느 정도가 좋을까요?'),
             Lottie.asset('images/Estudent.json'),
             //LottieImageAsset(width: 0, height: 0, i
 
             SfSlider(
-              min: -100,
-              max: 100,
+              min: 0,
+              max: 8,
               value: _value4,
               showDividers: true,
-              interval: 25,
+              interval: 1,
               showLabels: true,
               showTicks: true,
-              stepSize: 25,
+              stepSize: 1,
               onChangeStart: (dynamic startValue) {
                 print('Interaction started');
               },
@@ -48,6 +49,7 @@ class _EstudentPageState extends State<EstudentPage> {
               //   MessageSido.sliderPop = endValue;
               // },
             ),
+            const Text('(단위 : 100,000명)'),
             SizedBox(
               height: 20,
             ),

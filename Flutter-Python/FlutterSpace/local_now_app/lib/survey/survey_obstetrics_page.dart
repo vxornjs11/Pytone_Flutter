@@ -20,23 +20,24 @@ class _ObstetricsPageState extends State<ObstetricsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("산부인과 의원수는"),
+          title: const Text("나만의 지역의 산부인과 의원수는 ? "),
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('산부인과 의원수는?'),
+            // const Text('산부인과 의원수는?'),
             Lottie.asset('images/hospital.zip'),
             //LottieImageAsset(width: 0, height: 0, i
 
             SfSlider(
-              min: -100,
-              max: 100,
+              min: 0,
+              max: 8,
               value: _value3,
               showDividers: true,
-              interval: 25,
+              interval: 1,
               showLabels: true,
               showTicks: true,
-              stepSize: 25,
+              stepSize: 1,
               onChangeStart: (dynamic startValue) {
                 print('Interaction started');
               },
@@ -48,6 +49,7 @@ class _ObstetricsPageState extends State<ObstetricsPage> {
               //   MessageSido.sliderPop = endValue;
               // },
             ),
+            const Text('(단위 : 50곳)'),
             SizedBox(
               height: 20,
             ),

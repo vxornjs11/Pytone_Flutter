@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_now_app/models/message_answers.dart';
 import 'package:local_now_app/survey/first_page.dart';
+import 'package:local_now_app/survey/survey_moving_page.dart';
 import 'package:lottie/lottie.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
@@ -20,23 +21,24 @@ class _CompanyPageState extends State<CompanyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("신생 회사 숫자는?"),
+          title: const Text("나만의 지역의 신생 회사 숫자는?"),
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('신생 회사 숫자는?'),
+            // const Text('나만의 지역의 신생 회사 숫자는?'),
             Lottie.asset('images/building.json'),
             //LottieImageAsset(width: 0, height: 0, i
 
             SfSlider(
-              min: -100,
-              max: 100,
+              min: 0,
+              max: 8,
               value: _value5,
               showDividers: true,
-              interval: 25,
+              interval: 1,
               showLabels: true,
               showTicks: true,
-              stepSize: 25,
+              stepSize: 1,
               onChangeStart: (dynamic startValue) {
                 print('Interaction started');
               },
@@ -48,6 +50,7 @@ class _CompanyPageState extends State<CompanyPage> {
               //   MessageSido.sliderPop = endValue;
               // },
             ),
+            const Text('(단위 : 8,000개)'),
             SizedBox(
               height: 20,
             ),
@@ -60,7 +63,7 @@ class _CompanyPageState extends State<CompanyPage> {
                     //생성자로 값을 넣어주는 부분! *******************
                     //메모리에 안 올라감 -> 보안이 굿
                     //but 페이지 옮길 때 또 써줘야 해서 보안에 관련된 것만 생성자로 넘겨주기
-                    return FirstPage();
+                    return MovingPage();
                   },
                 ));
               },
