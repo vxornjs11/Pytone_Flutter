@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:local_now_app/Model/message_last_values.dart';
-import 'package:local_now_app/Model/message_sido.dart';
 import 'package:local_now_app/SidoPred/pred80_result.dart';
+import 'package:local_now_app/models/message_pred80.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
-
-import '../models/message_sido.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import '../models/message_last_values.dart';
+import '../widgets/custom_style.dart';
 
 class Pred80 extends StatefulWidget {
   const Pred80({super.key});
@@ -16,25 +17,40 @@ class Pred80 extends StatefulWidget {
 }
 
 class _Pred80State extends State<Pred80> {
-  late Map<String, dynamic> result;
+  // late double result;
   late CollectionReference<Map<String, dynamic>> seoul;
-  double _value1 = 0;
-  double _value2 = 0;
-  double _value3 = 0;
-  double _value4 = 0;
-  double _value5 = 0;
+  // 슬라이더 값
+  late double _value1;
+  late double _value2;
+  late double _value3;
+  late double _value4;
+  late double _value5;
 
+  // 계산되어 바뀌는 컬럼 값
   late num changeOutPop;
   late num changeBabies;
   late num changeCompanies;
   late num changeDoctors;
   late num changeStudents;
 
+  late int count;
+
   @override
   void initState() {
     super.initState();
-    result = {};
+    _value1 = 0;
+    _value2 = 0;
+    _value3 = 0;
+    _value4 = 0;
+    _value5 = 0;
+
     changeOutPop = 0;
+    changeBabies = 0;
+    changeCompanies = 0;
+    changeDoctors = 0;
+    changeStudents = 0;
+
+    count = 0;
   }
 
   @override
@@ -68,18 +84,35 @@ class _Pred80State extends State<Pred80> {
       outPop: doc['out_pop'],
       students: doc['students'],
     );
-    return Container(
-      // color: Colors.amber,
+
+    count += 1;
+
+    MessagePred80.sido = message.sido;
+
+    if (count == 1) {
+      changeBabies = doc['babies'];
+      changeCompanies = doc['companies'];
+      changeDoctors = doc['doctors'];
+      changeOutPop = doc['out_pop'];
+      changeStudents = doc['students'];
+    }
+
+    return Padding(
+      padding: const EdgeInsets.all(15),
       child: Column(
         children: [
-          Text('80년 후 ${message.sido}!'),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 50),
+            child: Text('80년 후 ${message.sido}는?',
+                style: CustomStyle().primaryTextStyle(Colors.teal[900])),
+          ),
           // // 위젯 만들면 클릭이 안 되고 바뀌지도 않음..
           // SizedBox(
           //   height: 100,
           //   width: 350,
           //   child: MySlider(),
           // ),
-          Text('전출인구 수: ${message.outPop}'),
+          Text('예상 전출인구 수: ${changeOutPop.round()}'),
           SfSlider(
             min: -100,
             max: 100,
@@ -91,18 +124,18 @@ class _Pred80State extends State<Pred80> {
             stepSize: 25,
             onChanged: (dynamic newValue) {
               _value1 = newValue;
-              print('newValue: ${newValue}');
+              print('newValue: ${newValue.round()}');
               int outPop = message.outPop;
               changeOutPop = outPop * (1 + (newValue / 100));
 
-              print('change: ${changeOutPop}');
+              print('change: ${changeOutPop.round()}');
               setState(() {});
             },
           ),
           const SizedBox(
             height: 20,
           ),
-          Text('출생아 수: ${message.babies}'),
+          Text('출생아 수: ${changeBabies.round()}'),
           SfSlider(
             min: -100,
             max: 100,
@@ -124,7 +157,7 @@ class _Pred80State extends State<Pred80> {
           const SizedBox(
             height: 20,
           ),
-          Text('산부인과 의원 수: ${message.doctors}'),
+          Text('산부인과 의원 수: ${changeDoctors.round()}'),
           SfSlider(
             min: -100,
             max: 100,
@@ -135,15 +168,18 @@ class _Pred80State extends State<Pred80> {
             showTicks: true,
             stepSize: 25,
             onChanged: (dynamic newValue) {
-              setState(() {
-                _value3 = newValue;
-              });
+              _value3 = newValue;
+
+              int doctors = message.doctors;
+              changeDoctors = doctors * (1 + (newValue / 100));
+
+              setState(() {});
             },
           ),
           const SizedBox(
             height: 20,
           ),
-          Text('초등학생 인원 수: ${message.students}'),
+          Text('초등학생 인원 수: ${changeStudents.round()}'),
           SfSlider(
             min: -100,
             max: 100,
@@ -153,22 +189,19 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
-            // onChangeStart: (dynamic startValue) {
-            //   print('Interaction started');
-            // },
             onChanged: (dynamic newValue) {
-              setState(() {
-                _value4 = newValue;
-              });
+              _value4 = newValue;
+
+              int students = message.babies;
+              changeStudents = students * (1 + (newValue / 100));
+
+              setState(() {});
             },
-            // onChangeEnd: (dynamic endValue) {
-            //   endValue4 = endValue;
-            // },
           ),
           const SizedBox(
             height: 20,
           ),
-          Text('도소매업 신생 기업 수: ${message.companies}'),
+          Text('도소매업 신생 기업 수: ${changeCompanies.round()}'),
           SfSlider(
             min: -100,
             max: 100,
@@ -178,43 +211,69 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
-            // onChangeStart: (dynamic startValue) {
-            //   print('Interaction started');
-            // },
             onChanged: (dynamic newValue) {
-              setState(() {
-                _value5 = newValue;
-              });
+              _value5 = newValue;
+
+              int companies = message.babies;
+              changeCompanies = companies * (1 + (newValue / 100));
+
+              setState(() {});
             },
-            // onChangeEnd: (dynamic endValue) {
-            //   endValue5 = endValue;
-            // },
           ),
           const SizedBox(
-            height: 20,
+            height: 50,
           ),
           ElevatedButton(
-            onPressed: () {
-              // 값 저장하고 결과 페이지로
-              MessageSido.sliderPop = _value1;
-              MessageSido.sliderBabies = _value2;
-              MessageSido.sliderDoctor = _value3;
-              MessageSido.sliderEStudent = _value4;
-              MessageSido.sliderCompanies = _value5;
+            style: CustomStyle().primaryButtonStyle(),
+            onPressed: () async {
+              // 예측 머신러닝
+              await getChangePred();
+              await get80Value();
+
+              // 결과 페이지로 넘어감
               Navigator.push(context, MaterialPageRoute(
                 builder: (context) {
-                  //생성자로 값을 넣어주는 부분! *******************
-                  //메모리에 안 올라감 -> 보안이 굿
-                  //but 페이지 옮길 때 또 써줘야 해서 보안에 관련된 것만 생성자로 넘겨주기
                   return Pred80Result();
                 },
               ));
             },
-            child: Text('결과 확인'),
+            child: const Text('결과 확인'),
           ),
           // LineChartSample6(),
         ],
       ),
     );
+  }
+
+  // 입력값 넣어서 예측값 도출하는 머신러닝 함수
+  getChangePred() async {
+    double result;
+    var url = Uri.parse(
+        'http://localhost:5000/all?pop=${changeOutPop.round()}&babies=${changeBabies.round()}&doctors=${changeDoctors.round()}&students=${changeStudents.round()}&companies=${changeCompanies.round()}');
+    var response = await http.get(url);
+    var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+    result = dataConvertedJSON['result'];
+
+    MessagePred80.change80 = result;
+
+    print('get: $changeOutPop');
+    print('예측값: ${result}');
+
+    setState(() {});
+    // print('change80: ${result}');
+  }
+
+  // 이대로 변하지 않으면 80년 뒤에 예측되는 값
+  get80Value() async {
+    Map<String, dynamic> result;
+    var url = Uri.parse('http://localhost:5000/seoul?year=2103');
+    var response = await http.get(url);
+    var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+    result = dataConvertedJSON['result'];
+
+    // 받아온 값 넣기
+    MessagePred80.pred80 = result['pre'];
+
+    setState(() {});
   }
 }
