@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_now_app/models/message_answers.dart';
 import 'package:local_now_app/survey/survey_baby_page.dart';
+import 'package:local_now_app/survey/survey_result.dart';
 import 'package:lottie/lottie.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
@@ -62,7 +63,7 @@ class _MovingPageState extends State<MovingPage> {
                     //생성자로 값을 넣어주는 부분! *******************
                     //메모리에 안 올라감 -> 보안이 굿
                     //but 페이지 옮길 때 또 써줘야 해서 보안에 관련된 것만 생성자로 넘겨주기
-                    return BabyPage();
+                    return ResultPage();
                   },
                 ));
               },
