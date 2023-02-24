@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:local_now_app/SidoPred/pred80_result.dart';
 import 'package:local_now_app/models/message_pred80.dart';
@@ -50,13 +51,11 @@ class _Pred80State extends State<Pred80> {
     changeStudents = 0;
 
     count = 0;
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('latestValue')
@@ -212,8 +211,6 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
-
-
             onChanged: (dynamic newValue) {
               _value4 = newValue;
 
@@ -222,7 +219,6 @@ class _Pred80State extends State<Pred80> {
 
               setState(() {});
             },
-
           ),
           const SizedBox(
             height: 20,
@@ -239,8 +235,6 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
-
-          
             onChanged: (dynamic newValue) {
               _value5 = newValue;
 
@@ -249,11 +243,9 @@ class _Pred80State extends State<Pred80> {
 
               setState(() {});
             },
-
           ),
           const SizedBox(
             height: 50,
-
           ),
           ElevatedButton(
             style: CustomStyle().primaryButtonStyle(),

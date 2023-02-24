@@ -61,12 +61,20 @@ class _Pred80ResultState extends State<Pred80Result> {
                   child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: Colors.amber,
+                        color: Color(0xffD8D8D8),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                            '내가 만든 소멸 위험도: ${MessagePred80.change80.toStringAsFixed(2)}'),
+                        child: Row(
+                          children: [
+                            // Image.asset(
+                            //   "images/marker1.PNG",
+                            //   width: 15,
+                            // ),
+                            Text(
+                                ' 내가 만든 소멸 위험도: ${MessagePred80.change80.toStringAsFixed(2)}'),
+                          ],
+                        ),
                       )),
                 ),
               ],
@@ -81,12 +89,20 @@ class _Pred80ResultState extends State<Pred80Result> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: Colors.green,
+                    color: Color(0xffD8D8D8),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                        '80년 후 소멸 위험도: ${MessagePred80.pred80.toStringAsFixed(2)}'),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          "images/marker2.PNG",
+                          width: 15,
+                        ),
+                        Text(
+                            '80년 후 소멸 위험도: ${MessagePred80.pred80.toStringAsFixed(2)}'),
+                      ],
+                    ),
                   ),
                 ),
               ],

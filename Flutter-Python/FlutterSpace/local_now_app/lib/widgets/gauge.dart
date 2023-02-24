@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:local_now_app/models/message_pred80.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-
-import '../models/message_sido.dart';
 
 class Gauge extends StatefulWidget {
   const Gauge({super.key});
@@ -36,16 +32,23 @@ class _GaugeState extends State<Gauge> {
               endAngle: 0,
               tickOffset: 25,
               pointers: <GaugePointer>[
+                MarkerPointer(
+                    value: MessagePred80.pred80,
+                    markerType: MarkerType.image,
+                    markerHeight: 30,
+                    markerWidth: 20,
+                    imageUrl: 'images/marker2.png'),
                 NeedlePointer(
                   value: MessagePred80.change80,
                 ),
                 // 80년 뒤 소멸 위험도
-                MarkerPointer(
-                  value: MessagePred80.pred80,
-                  markerHeight: 20,
-                  markerWidth: 20,
-                  elevation: 4,
-                )
+                // MarkerPointer(
+                //   value: MessagePred80.pred80,
+                //   markerHeight: 20,
+                //   markerWidth: 20,
+                //   elevation: 4,
+                //   color: Colors.black,
+                // )
               ],
               ranges: <GaugeRange>[
                 GaugeRange(
