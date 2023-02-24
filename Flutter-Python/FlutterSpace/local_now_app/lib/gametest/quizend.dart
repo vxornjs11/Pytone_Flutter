@@ -63,9 +63,10 @@ class _quizendState extends State<quizend> {
                   final userName = controller.text;
                   final quizPoint = result;
                   String newUsername = userName;
+                  print(userName);
                   bool isTaken =
                       await isUsernameTaken(newUsername: newUsername);
-                  if (isTaken == false) {
+                  if (isTaken == false && userName != "") {
                     // flase일 경우 Firebase에 같은 아이디가 없는 것이다.
                     creatUser(name: userName.toString(), point: quizPoint);
                     // 완료Alert창을 띄워주며 text를 초기화

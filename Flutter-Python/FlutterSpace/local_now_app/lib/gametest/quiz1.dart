@@ -115,6 +115,7 @@ class _quiz1State extends State<quiz1> {
                   if (result == "경기도") {
                     Q2point = Q2point + 1;
                   }
+                  Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
                   Navigator.push(
                     context,
                     MaterialPageRoute(

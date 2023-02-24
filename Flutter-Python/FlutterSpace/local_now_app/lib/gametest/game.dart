@@ -25,6 +25,7 @@ class _gamePageState extends State<gamePage> {
           children: [
             ElevatedButton(
               onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
