@@ -117,6 +117,7 @@ class _quiz2State extends State<quiz2> {
                   if (result == "충청북도") {
                     Q3point = Q3point + 1;
                   }
+                  Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
                   Navigator.push(
                     context,
                     MaterialPageRoute(

@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:kakao_flutter_sdk_share/kakao_flutter_sdk_share.dart';
 
+import '../KoreaMap/korea.dart';
 import '../gametest/game.dart';
 import 'kakaoapi.dart';
 
@@ -58,15 +59,26 @@ class _KaKaosState extends State<KaKaos> {
                 ),
               ),
               ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const gamePage(),
+                    ),
+                  );
+                },
+                child: const Text("게임하러가기 (임시임)"),
+              ),
+              ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const gamePage(),
+                        builder: (context) => const KoreaMap(),
                       ),
                     );
                   },
-                  child: const Text("게임하러가기 (임시임)"))
+                  child: const Text("Map"))
             ],
           ),
         ),
