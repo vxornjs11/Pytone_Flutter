@@ -29,16 +29,16 @@ class Home extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const FirstPage(),
-                    )),
+                // onTap: () => Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       // builder: (context) => const FirstPage(),
+                //     )),
                 child: Container(
                   width: double.infinity,
                   height: deviceHeight / 4.3,
-                  decoration: CustomStyle()
-                      .primaryBoxStyle(Colors.deepOrange[200]!.withOpacity(0.8)),
+                  decoration: CustomStyle().primaryBoxStyle(
+                      Colors.deepOrange[200]!.withOpacity(0.8)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -124,17 +124,21 @@ class Home extends StatelessWidget {
                             ));
                       },
                       child: const Text('호식')),
-              ElevatedButton(
-                  onPressed: () {
-                    //
-                  },
-                  child: const Text('예진')),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => KaKaos()));
-                  },
-                  child: const Text('태권')),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Pred80(),
+                            ));
+                      },
+                      child: const Text('예진')),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => KaKaos()));
+                      },
+                      child: const Text('태권')),
                 ],
               ),
             ],
