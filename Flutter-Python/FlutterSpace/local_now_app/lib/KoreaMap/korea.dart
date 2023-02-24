@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:local_now_app/SidoPred/pred80.dart';
+import 'package:local_now_app/models/message_pred80.dart';
 
 class KoreaMap extends StatefulWidget {
   const KoreaMap({super.key});
@@ -41,7 +43,11 @@ class _KoreaMapState extends State<KoreaMap> {
                           alignment: Alignment.center,
                           child: GestureDetector(
                             onTap: () {
-                              //
+                              MessagePred80.sido = "경기도";
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Pred80()));
                             },
                             child: const Text(
                               "경기도",
@@ -63,7 +69,11 @@ class _KoreaMapState extends State<KoreaMap> {
                           alignment: Alignment.center,
                           child: GestureDetector(
                             onTap: () {
-                              //
+                              MessagePred80.sido = "서울특별시";
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Pred80()));
                             },
                             child: const Text(
                               "서울",
@@ -83,7 +93,11 @@ class _KoreaMapState extends State<KoreaMap> {
                           alignment: Alignment.center,
                           child: GestureDetector(
                             onTap: () {
-                              //
+                              MessagePred80.sido = "인천광역시";
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Pred80()));
                             },
                             child: const Text(
                               "인천",
@@ -103,7 +117,11 @@ class _KoreaMapState extends State<KoreaMap> {
                       alignment: Alignment.center,
                       child: GestureDetector(
                         onTap: () {
-                          //
+                          MessagePred80.sido = "강원도";
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Pred80()));
                         },
                         child: const Text(
                           "강원도",
@@ -132,7 +150,11 @@ class _KoreaMapState extends State<KoreaMap> {
                           alignment: Alignment.center,
                           child: GestureDetector(
                             onTap: () {
-                              //
+                              MessagePred80.sido = "충청북도"; //
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Pred80()));
                             },
                             child: const Text(
                               "               충청북도",
@@ -154,7 +176,11 @@ class _KoreaMapState extends State<KoreaMap> {
                           alignment: Alignment.center,
                           child: GestureDetector(
                             onTap: () {
-                              //
+                              MessagePred80.sido = "대전광역시";
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Pred80()));
                             },
                             child: const Text(
                               " 대전",
@@ -174,7 +200,11 @@ class _KoreaMapState extends State<KoreaMap> {
                           alignment: Alignment.center,
                           child: GestureDetector(
                             onTap: () {
-                              //
+                              MessagePred80.sido = "충청남도";
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Pred80()));
                             },
                             child: const Text(
                               " \n" + " 충청남도",
@@ -194,7 +224,11 @@ class _KoreaMapState extends State<KoreaMap> {
                       alignment: Alignment.center,
                       child: GestureDetector(
                         onTap: () {
-                          //
+                          MessagePred80.sido = "경상북도";
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Pred80()));
                         },
                         child: const Text(
                           " 경상북도",
@@ -222,7 +256,11 @@ class _KoreaMapState extends State<KoreaMap> {
                           alignment: Alignment.center,
                           child: GestureDetector(
                             onTap: () {
-                              //
+                              MessagePred80.sido = "전라북도";
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Pred80()));
                             },
                             child: const Text(
                               "전라북도",
@@ -244,7 +282,11 @@ class _KoreaMapState extends State<KoreaMap> {
                           alignment: Alignment.center,
                           child: GestureDetector(
                             onTap: () {
-                              //
+                              MessagePred80.sido = "광주광역시";
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Pred80()));
                             },
                             child: const Text(
                               "광주광역시",
@@ -267,7 +309,11 @@ class _KoreaMapState extends State<KoreaMap> {
                             alignment: Alignment.centerLeft,
                             child: GestureDetector(
                               onTap: () {
-                                //
+                                MessagePred80.sido = "경상남도";
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Pred80()));
                               },
                               child: const Text(
                                 "\n\n\n\n\n 경상남도",
@@ -289,7 +335,11 @@ class _KoreaMapState extends State<KoreaMap> {
                             alignment: Alignment.center,
                             child: GestureDetector(
                               onTap: () {
-                                //
+                                MessagePred80.sido = "대구광역시";
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Pred80()));
                               },
                               child: const Text(
                                 " 대구",
@@ -311,7 +361,11 @@ class _KoreaMapState extends State<KoreaMap> {
                             alignment: Alignment.center,
                             child: GestureDetector(
                               onTap: () {
-                                //
+                                MessagePred80.sido = "울산광역시";
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Pred80()));
                               },
                               child: const Text(
                                 "울산",
@@ -333,7 +387,13 @@ class _KoreaMapState extends State<KoreaMap> {
                             alignment: Alignment.center,
                             child: GestureDetector(
                               onTap: () {
-                                //
+                                setState(() {
+                                  MessagePred80.sido = "부산광역시";
+                                });
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Pred80()));
                               },
                               child: const Text(
                                 "부산",
@@ -362,7 +422,11 @@ class _KoreaMapState extends State<KoreaMap> {
                             alignment: Alignment.center,
                             child: GestureDetector(
                               onTap: () {
-                                //
+                                MessagePred80.sido = "전라남도";
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Pred80()));
                               },
                               child: const Text(
                                 "전라남도",
@@ -393,7 +457,13 @@ class _KoreaMapState extends State<KoreaMap> {
                       alignment: Alignment.center,
                       child: GestureDetector(
                         onTap: () {
-                          //
+                          MessagePred80.sido = "제주특별자치도";
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Pred80(),
+                            ),
+                          );
                         },
                         child: const Text(
                           "제주특별자치도",
