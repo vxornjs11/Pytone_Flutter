@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ranking extends StatefulWidget {
-  const ranking({super.key});
+class Ranking extends StatefulWidget {
+  const Ranking({super.key});
 
   @override
-  State<ranking> createState() => _rankingState();
+  State<Ranking> createState() => _RankingState();
 }
 
-class _rankingState extends State<ranking> {
+class _RankingState extends State<Ranking> {
   @override
   void initState() {
-    // TODO: implement initState
+    // implement initState
     super.initState();
   }
 

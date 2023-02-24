@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 import 'easygame.dart';
 import 'list.dart';
 
-class gamePage extends StatefulWidget {
-  const gamePage({super.key});
+class GamePage extends StatefulWidget {
+  const GamePage({super.key});
 
   @override
-  State<gamePage> createState() => _gamePageState();
+  State<GamePage> createState() => _GamePageState();
 }
 
-class _gamePageState extends State<gamePage> {
+class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +27,7 @@ class _gamePageState extends State<gamePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => easygame(),
+                    builder: (context) => const EasyGame(),
                   ),
                 );
               },
@@ -40,7 +38,7 @@ class _gamePageState extends State<gamePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ranking(),
+                      builder: (context) => const Ranking(),
                     ),
                   );
                 },

@@ -56,7 +56,7 @@ def seoul_gungu_all():
         gungu_dict[gungu] = df['pred_cluster'][df['군구'] == gungu].tolist()
     res = gungu_dict
 
-    print(res)
+    # print(res)
 
     return jsonify({'result' : res})
 
