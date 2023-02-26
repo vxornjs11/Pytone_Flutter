@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:local_now_app/KoreaMap/korea.dart';
 import 'package:local_now_app/seoul/seoul.dart';
 import 'package:local_now_app/survey/first_page.dart';
 import 'package:local_now_app/widgets/custom_app_bar.dart';
@@ -58,7 +59,7 @@ class Home extends StatelessWidget {
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Pred80(),
+                      builder: (context) => const KoreaMap(),
                     )),
                 child: Container(
                   width: double.infinity,

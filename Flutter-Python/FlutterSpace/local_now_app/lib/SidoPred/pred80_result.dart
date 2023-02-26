@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:local_now_app/home.dart';
-
 import '../models/message_pred80.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_style.dart';
@@ -95,10 +94,10 @@ class _Pred80ResultState extends State<Pred80Result> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        Image.asset(
-                          "images/marker2.PNG",
-                          width: 15,
-                        ),
+                        // Image.asset(
+                        //   "images/marker2.PNG",
+                        //   width: 15,
+                        // ),
                         Text(
                             '80년 후 소멸 위험도: ${MessagePred80.pred80.toStringAsFixed(2)}'),
                       ],
