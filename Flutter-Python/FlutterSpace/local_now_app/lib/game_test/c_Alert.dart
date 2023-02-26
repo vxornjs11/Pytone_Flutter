@@ -1,17 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/custom_style.dart';
+
 class Alertclass {
   Alert(BuildContext context) {
+    CustomStyle textcolor = CustomStyle();
     // setState(() {
     showDialog(
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
-            title: const Text(
+            title: Text(
               '경고!',
-              style: TextStyle(
-                  color: Colors.red, fontSize: 25, fontWeight: FontWeight.bold),
+              style: textcolor.secondaryTextStyle(Colors.teal[900]),
             ),
             content: SizedBox(
               width: 200,
