@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/message_last_values.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_style.dart';
 
 class Pred80 extends StatefulWidget {
@@ -61,6 +62,7 @@ class _Pred80State extends State<Pred80> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(appBar: AppBar(), title: '전국'),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('latestValue')

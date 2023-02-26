@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_now_app/home.dart';
 import '../models/message_pred80.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_style.dart';
 import '../widgets/gauge.dart';
 import '../widgets/survey_result_chart.dart';
@@ -25,6 +26,7 @@ class _Pred80ResultState extends State<Pred80Result> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(appBar: AppBar(), title: '전국'),
       body: Stack(
         children: <Widget>[
           Padding(

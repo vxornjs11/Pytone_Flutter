@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:local_now_app/game_test/easygame.dart';
 import 'package:local_now_app/home.dart';
+import 'package:local_now_app/news_scrapy/news_main.dart';
+import 'package:local_now_app/news_scrapy/topTabbarTest.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
   const CustomBottomNavBar({super.key});
@@ -22,19 +25,27 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: NavigationBar(
-
-        destinations: const [
+        destinations: [
           NavigationDestination(
-            icon: Icon(Icons.business, color: Colors.teal,),
-            label: '',
+            icon: Icon(
+              Icons.library_books,
+              color: Colors.teal[500],
+            ),
+            label: 'news',
           ),
           NavigationDestination(
-            icon: Icon(Icons.home, color: Colors.cyan,),
-            label: '',
+            icon: Icon(
+              Icons.home,
+              color: Colors.deepOrange[800],
+            ),
+            label: 'Home',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.list, color: Colors.blue,),
-            label: '',
+          const NavigationDestination(
+            icon: Icon(
+              Icons.emoji_events,
+              color: Colors.indigoAccent,
+            ),
+            label: 'Quiz',
           ),
         ],
         selectedIndex: currentPageIndex,
@@ -44,15 +55,15 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
           });
         },
         // backgroundColor: Theme.of(context).primaryColor.withOpacity(0.3),
-        // animationDuration: const Duration(seconds: 2),
+        // animationDuration: const Duration(seconds: 1),
         height: 44,
         backgroundColor: Theme.of(context).primaryColorLight.withOpacity(0.4),
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
       ),
       body: <Widget>[
+        const NewsMain(),
         const Home(),
-        const Home(),
-        const Home(),
+        const EasyGame(),
       ][currentPageIndex],
     );
   }

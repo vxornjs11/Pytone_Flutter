@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:kakao_flutter_sdk_share/kakao_flutter_sdk_share.dart';
 
 import '../KoreaMap/korea.dart';
-import '../gametest/game.dart';
+import '../game_test/game_page.dart';
 import 'kakaoapi.dart';
 
 class KaKaos extends StatefulWidget {
@@ -63,7 +60,7 @@ class _KaKaosState extends State<KaKaos> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const gamePage(),
+                      builder: (context) => const GamePage(),
                     ),
                   );
                 },
