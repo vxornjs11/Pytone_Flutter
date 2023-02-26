@@ -26,6 +26,7 @@ class _QuizEndState extends State<QuizEnd> {
   late String profiletitle = 'local_now';
   // profiletitle = 우리 앱 이름
   late String userName = 'User Name';
+  late String newUsername = "";
   late String point = '100점';
   final controller = TextEditingController();
   Alertclass alert = Alertclass();
@@ -76,7 +77,7 @@ class _QuizEndState extends State<QuizEnd> {
                       onPressed: () async {
                         final userName = controller.text;
                         final quizPoint = result;
-                        String newUsername = userName;
+                        newUsername = userName;
                         bool isTaken =
                             await isUsernameTaken(newUsername: newUsername);
                         if (isTaken == false && userName != "") {
@@ -113,6 +114,7 @@ class _QuizEndState extends State<QuizEnd> {
                     // style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
                     onPressed: () {
                       point = "나의 테스트 점수는 " + result.toString() + "점";
+                      userName = newUsername;
                       kakaolink.kakao(profiletitle, userName, point);
                       // kakao();
                     },
