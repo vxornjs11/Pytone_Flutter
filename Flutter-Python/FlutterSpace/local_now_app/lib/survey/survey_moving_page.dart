@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:local_now_app/models/message_answers.dart';
-import 'package:local_now_app/survey/survey_baby_page.dart';
 import 'package:local_now_app/survey/survey_result.dart';
 import 'package:local_now_app/widgets/custom_style.dart';
 import 'package:lottie/lottie.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
+
+import '../widgets/custom_app_bar.dart';
 
 class MovingPage extends StatefulWidget {
   const MovingPage({super.key});
@@ -21,9 +22,7 @@ class _MovingPageState extends State<MovingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("나만의 지역의 전출인구 수?"),
-        ),
+        appBar: CustomAppBar(appBar: AppBar(), title: '나만의 지역의 전출인구 수는?'),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(

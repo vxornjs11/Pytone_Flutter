@@ -4,6 +4,7 @@ import 'package:local_now_app/survey/survey_Estudent_page.dart';
 import 'package:lottie/lottie.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
+import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_style.dart';
 
 class ObstetricsPage extends StatefulWidget {
@@ -21,9 +22,7 @@ class _ObstetricsPageState extends State<ObstetricsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("나만의 지역의 산부인과 의원수는 ? "),
-        ),
+        appBar: CustomAppBar(appBar: AppBar(), title: '나만의 지역의 산부인과 의원수는?'),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -33,7 +32,7 @@ class _ObstetricsPageState extends State<ObstetricsPage> {
               // const Text('산부인과 의원수는?'),
               Lottie.asset('images/hospital.zip'),
               //LottieImageAsset(width: 0, height: 0, i
-        
+
               SfSlider(
                 min: 0,
                 max: 8,
@@ -65,7 +64,7 @@ class _ObstetricsPageState extends State<ObstetricsPage> {
                       //생성자로 값을 넣어주는 부분! *******************
                       //메모리에 안 올라감 -> 보안이 굿
                       //but 페이지 옮길 때 또 써줘야 해서 보안에 관련된 것만 생성자로 넘겨주기
-                      return EstudentPage();
+                      return const EstudentPage();
                     },
                   ));
                 },

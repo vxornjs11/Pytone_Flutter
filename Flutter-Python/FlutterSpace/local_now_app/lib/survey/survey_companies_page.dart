@@ -5,6 +5,8 @@ import 'package:local_now_app/widgets/custom_style.dart';
 import 'package:lottie/lottie.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
+import '../widgets/custom_app_bar.dart';
+
 class CompanyPage extends StatefulWidget {
   const CompanyPage({super.key});
 
@@ -20,9 +22,7 @@ class _CompanyPageState extends State<CompanyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("나만의 지역의 신생 회사 숫자는?"),
-        ),
+        appBar: CustomAppBar(appBar: AppBar(), title: '나만의 지역의 신생 회사 숫자는?'),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(

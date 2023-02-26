@@ -5,6 +5,12 @@ import 'package:local_now_app/widgets/custom_style.dart';
 import '../models/message_seoul.dart';
 import '../widgets/custom_app_bar.dart';
 
+//
+// Create on 2023-02-22
+// author: Sangwon Kim
+// Description: 서울 전체 지역 차트 페이지
+//
+
 class SeoulAllChart extends StatefulWidget {
   // final String resultList;
   const SeoulAllChart({super.key});
@@ -157,7 +163,7 @@ class _SeoulAllChartState extends State<SeoulAllChart> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: MediaQuery.of(context).size.height*0.01),
                   Column(
                     children: [
                       Container(
@@ -271,6 +277,7 @@ class _SeoulAllChartState extends State<SeoulAllChart> {
                       ),
                     ],
                   ),
+                  SizedBox(height: MediaQuery.of(context).size.height*0.02),
                   ElevatedButton(
                     style: CustomStyle().primaryButtonStyle(),
                     onPressed: () {
@@ -281,7 +288,7 @@ class _SeoulAllChartState extends State<SeoulAllChart> {
                     },
                     child: const Text('전체 추이 보기'),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: MediaQuery.of(context).size.height*0.01),
                 ],
               ),
             ],

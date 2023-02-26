@@ -12,9 +12,11 @@ import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_loader.dart';
 import '../widgets/custom_style.dart';
 
+//
 // Create on 2023-02-21
 // author: Sangwon Kim
 // Description: 서울 군구별 안내 페이지
+//
 
 class Seoul extends StatefulWidget {
   const Seoul({super.key});

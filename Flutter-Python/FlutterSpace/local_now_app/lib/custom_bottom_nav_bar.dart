@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:local_now_app/game_test/easygame.dart';
 import 'package:local_now_app/home.dart';
 import 'package:local_now_app/news_scrapy/news_main.dart';
-import 'package:local_now_app/news_scrapy/topTabbarTest.dart';
+
+//
+// Create on 2023-02-22
+// author: Sangwon Kim
+// Description: 바텀 네비게이션바
+//
 
 class CustomBottomNavBar extends StatefulWidget {
   const CustomBottomNavBar({super.key});

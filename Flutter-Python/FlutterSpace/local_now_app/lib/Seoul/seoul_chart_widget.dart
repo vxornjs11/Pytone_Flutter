@@ -6,6 +6,12 @@ import 'package:http/http.dart' as http;
 
 import '../widgets/custom_loader.dart';
 
+//
+// Create on 2023-02-22
+// author: Sangwon Kim
+// Description: 서울 군구별 차트 위젯
+//
+
 class SeoulChartWidget extends StatefulWidget {
   final Map<String, dynamic> resultMap;
   final String gungu;

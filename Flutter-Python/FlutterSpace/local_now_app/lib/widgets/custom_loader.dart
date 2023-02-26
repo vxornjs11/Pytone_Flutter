@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+//
+// Create on 2023-02-21
+// author: Sangwon Kim
+// Description: 로딩 위젯
+//
+
 class CustomLoader extends StatelessWidget {
   final bool onLoad;
   const CustomLoader({super.key, required this.onLoad});

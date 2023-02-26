@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:local_now_app/SidoPred/pred80.dart';
 import 'package:local_now_app/models/message_pred80.dart';
+import 'package:local_now_app/widgets/custom_app_bar.dart';
 
 class KoreaMap extends StatefulWidget {
   const KoreaMap({super.key});
@@ -15,6 +14,7 @@ class _KoreaMapState extends State<KoreaMap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(appBar: AppBar(), title: '전국'),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Stack(
@@ -47,7 +47,7 @@ class _KoreaMapState extends State<KoreaMap> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Pred80()));
+                                      builder: (context) => const Pred80()));
                             },
                             child: const Text(
                               "경기도",
@@ -73,7 +73,7 @@ class _KoreaMapState extends State<KoreaMap> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Pred80()));
+                                      builder: (context) => const Pred80()));
                             },
                             child: const Text(
                               "서울",
@@ -97,7 +97,7 @@ class _KoreaMapState extends State<KoreaMap> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Pred80()));
+                                      builder: (context) => const Pred80()));
                             },
                             child: const Text(
                               "인천",
@@ -121,7 +121,7 @@ class _KoreaMapState extends State<KoreaMap> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Pred80()));
+                                  builder: (context) => const Pred80()));
                         },
                         child: const Text(
                           "강원도",
@@ -154,7 +154,7 @@ class _KoreaMapState extends State<KoreaMap> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Pred80()));
+                                      builder: (context) => const Pred80()));
                             },
                             child: const Text(
                               "               충청북도",
@@ -180,7 +180,7 @@ class _KoreaMapState extends State<KoreaMap> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Pred80()));
+                                      builder: (context) => const Pred80()));
                             },
                             child: const Text(
                               " 대전",
@@ -204,7 +204,7 @@ class _KoreaMapState extends State<KoreaMap> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Pred80()));
+                                      builder: (context) => const Pred80()));
                             },
                             child: const Text(
                               " \n" + " 충청남도",
@@ -228,7 +228,7 @@ class _KoreaMapState extends State<KoreaMap> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Pred80()));
+                                  builder: (context) => const Pred80()));
                         },
                         child: const Text(
                           " 경상북도",
@@ -286,7 +286,7 @@ class _KoreaMapState extends State<KoreaMap> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Pred80()));
+                                      builder: (context) => const Pred80()));
                             },
                             child: const Text(
                               "광주광역시",
@@ -313,7 +313,7 @@ class _KoreaMapState extends State<KoreaMap> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Pred80()));
+                                        builder: (context) => const Pred80()));
                               },
                               child: const Text(
                                 "\n\n\n\n\n 경상남도",
@@ -339,7 +339,7 @@ class _KoreaMapState extends State<KoreaMap> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Pred80()));
+                                        builder: (context) => const Pred80()));
                               },
                               child: const Text(
                                 " 대구",
@@ -365,7 +365,7 @@ class _KoreaMapState extends State<KoreaMap> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Pred80()));
+                                        builder: (context) => const Pred80()));
                               },
                               child: const Text(
                                 "울산",
@@ -393,7 +393,7 @@ class _KoreaMapState extends State<KoreaMap> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Pred80()));
+                                        builder: (context) => const Pred80()));
                               },
                               child: const Text(
                                 "부산",
@@ -426,7 +426,7 @@ class _KoreaMapState extends State<KoreaMap> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Pred80()));
+                                        builder: (context) => const Pred80()));
                               },
                               child: const Text(
                                 "전라남도",
@@ -461,7 +461,7 @@ class _KoreaMapState extends State<KoreaMap> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Pred80(),
+                              builder: (context) => const Pred80(),
                             ),
                           );
                         },
