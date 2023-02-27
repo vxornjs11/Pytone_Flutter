@@ -17,16 +17,16 @@ class _KoreaMapState extends State<KoreaMap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(appBar: AppBar(), title: '전국'),
+      appBar: CustomAppBar(appBar: AppBar(), title: '지역을 선택하세요!'),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Stack(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 50, 20, 10),
-              child: Text('80년 후 미래가 궁금한 지역을 선택하세요!',
-                  style: CustomStyle().primaryTextStyle(Colors.teal[900])),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.fromLTRB(20, 50, 20, 10),
+            //   child: Text('80년 후 미래가 궁금한 지역을 선택하세요!',
+            //       style: CustomStyle().primaryTextStyle(Colors.teal[900])),
+            // ),
             Center(
                 child: Image.asset(
               "images/koreamap.png",

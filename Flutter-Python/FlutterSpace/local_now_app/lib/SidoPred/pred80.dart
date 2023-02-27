@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/message_last_values.dart';
 import '../widgets/custom_app_bar.dart';
+import '../widgets/custom_loader.dart';
 import '../widgets/custom_style.dart';
 
 class Pred80 extends StatefulWidget {
@@ -37,6 +38,7 @@ class _Pred80State extends State<Pred80> {
   // 라벨에 값을 한번만 초기화해주기 위해 카운트한다.
   late int count;
 
+  // 로티
   late bool onLoad;
 
   // 시도별로 다른 모델을 호출하기 위한 변수
@@ -113,251 +115,259 @@ class _Pred80State extends State<Pred80> {
 
     return Padding(
       padding: const EdgeInsets.all(15),
-      child: Column(
+      child: Stack(
         children: [
-          // Padding(
-          //   padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-          //   child: Text('80년 후 ${message.sido}는?',
-          //       style: CustomStyle().primaryTextStyle(Colors.teal[900])),
-          // ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  '예상 전출인구 수: ${changeOutPop.round()}명',
-                  style:
-                      CustomStyle().secondaryTextStyle(const Color(0xff495464)),
-                ),
-              ],
-            ),
-          ),
-          SfSlider(
-            min: -100,
-            max: 100,
-            value: _value1,
-            showDividers: true,
-            interval: 25,
-            showLabels: true,
-            showTicks: true,
-            stepSize: 25,
-            onChanged: (dynamic newValue) {
-              _value1 = newValue;
-
-              int outPop = message.outPop;
-              changeOutPop = outPop * (1 + (newValue / 100));
-
-              setState(() {});
-            },
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              Text(
-                '(단위: %)',
-                style: TextStyle(fontSize: 12),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+          Column(
             children: [
+              // Padding(
+              //   padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+              //   child: Text('80년 후 ${message.sido}는?',
+              //       style: CustomStyle().primaryTextStyle(Colors.teal[900])),
+              // ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
-                child: Text(
-                  '출생아 수: ${changeBabies.round()}명',
-                  style:
-                      CustomStyle().secondaryTextStyle(const Color(0xff495464)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      '예상 전출인구 수: ${changeOutPop.round()}명',
+                      style: CustomStyle()
+                          .secondaryTextStyle(const Color(0xff495464)),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-          SfSlider(
-            min: -100,
-            max: 100,
-            value: _value2,
-            showDividers: true,
-            interval: 25,
-            showLabels: true,
-            showTicks: true,
-            stepSize: 25,
-            onChanged: (dynamic newValue) {
-              _value2 = newValue;
+              SfSlider(
+                min: -100,
+                max: 100,
+                value: _value1,
+                showDividers: true,
+                interval: 25,
+                showLabels: true,
+                showTicks: true,
+                stepSize: 25,
+                onChanged: (dynamic newValue) {
+                  _value1 = newValue;
 
-              int babies = message.babies;
-              changeBabies = babies * (1 + (newValue / 100));
+                  int outPop = message.outPop;
+                  changeOutPop = outPop * (1 + (newValue / 100));
 
-              setState(() {});
-            },
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              Text(
-                '(단위: %)',
-                style: TextStyle(fontSize: 12),
+                  setState(() {});
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: const [
+                  Text(
+                    '(단위: %)',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+                    child: Text(
+                      '출생아 수: ${changeBabies.round()}명',
+                      style: CustomStyle()
+                          .secondaryTextStyle(const Color(0xff495464)),
+                    ),
+                  ),
+                ],
+              ),
+              SfSlider(
+                min: -100,
+                max: 100,
+                value: _value2,
+                showDividers: true,
+                interval: 25,
+                showLabels: true,
+                showTicks: true,
+                stepSize: 25,
+                onChanged: (dynamic newValue) {
+                  _value2 = newValue;
+
+                  int babies = message.babies;
+                  changeBabies = babies * (1 + (newValue / 100));
+
+                  setState(() {});
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: const [
+                  Text(
+                    '(단위: %)',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+                    child: Text(
+                      '산부인과 의원 수: ${changeDoctors.round()}개',
+                      style: CustomStyle()
+                          .secondaryTextStyle(const Color(0xff495464)),
+                    ),
+                  ),
+                ],
+              ),
+              SfSlider(
+                min: -100,
+                max: 100,
+                value: _value3,
+                showDividers: true,
+                interval: 25,
+                showLabels: true,
+                showTicks: true,
+                stepSize: 25,
+                onChanged: (dynamic newValue) {
+                  _value3 = newValue;
+
+                  int doctors = message.doctors;
+                  changeDoctors = doctors * (1 + (newValue / 100));
+
+                  setState(() {});
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: const [
+                  Text(
+                    '(단위: %)',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+                    child: Text(
+                      '초등학생 인원 수: ${changeStudents.round()}명',
+                      style: CustomStyle()
+                          .secondaryTextStyle(const Color(0xff495464)),
+                    ),
+                  ),
+                ],
+              ),
+              SfSlider(
+                min: -100,
+                max: 100,
+                value: _value4,
+                showDividers: true,
+                interval: 25,
+                showLabels: true,
+                showTicks: true,
+                stepSize: 25,
+                onChanged: (dynamic newValue) {
+                  _value4 = newValue;
+
+                  int students = message.babies;
+                  changeStudents = students * (1 + (newValue / 100));
+
+                  setState(() {});
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: const [
+                  Text(
+                    '(단위: %)',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+                    child: Text(
+                      '도소매업 신생 기업 수: ${changeCompanies.round()}개',
+                      style: CustomStyle()
+                          .secondaryTextStyle(const Color(0xff495464)),
+                    ),
+                  ),
+                ],
+              ),
+              SfSlider(
+                min: -100,
+                max: 100,
+                value: _value5,
+                showDividers: true,
+                interval: 25,
+                showLabels: true,
+                showTicks: true,
+                stepSize: 25,
+                onChanged: (dynamic newValue) {
+                  _value5 = newValue;
+
+                  int companies = message.babies;
+                  changeCompanies = companies * (1 + (newValue / 100));
+
+                  setState(() {});
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: const [
+                  Text(
+                    '(단위: %)',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              ElevatedButton(
+                style: CustomStyle().primaryButtonStyle(),
+                onPressed: () async {
+                  // 예측 머신러닝
+                  await getChangePred();
+                  await get80Value();
+
+                  setState(() {
+                    onLoad = true;
+                  });
+                  Future.delayed(const Duration(seconds: 2), () {
+                    setState(() {
+                      onLoad = false;
+                    });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Pred80Result(),
+                        ));
+                  });
+                },
+                child: const Text('결과 확인'),
               ),
             ],
           ),
-
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
-                child: Text(
-                  '산부인과 의원 수: ${changeDoctors.round()}개',
-                  style:
-                      CustomStyle().secondaryTextStyle(const Color(0xff495464)),
-                ),
-              ),
-            ],
-          ),
-          SfSlider(
-            min: -100,
-            max: 100,
-            value: _value3,
-            showDividers: true,
-            interval: 25,
-            showLabels: true,
-            showTicks: true,
-            stepSize: 25,
-            onChanged: (dynamic newValue) {
-              _value3 = newValue;
-
-              int doctors = message.doctors;
-              changeDoctors = doctors * (1 + (newValue / 100));
-
-              setState(() {});
-            },
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              Text(
-                '(단위: %)',
-                style: TextStyle(fontSize: 12),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
-                child: Text(
-                  '초등학생 인원 수: ${changeStudents.round()}명',
-                  style:
-                      CustomStyle().secondaryTextStyle(const Color(0xff495464)),
-                ),
-              ),
-            ],
-          ),
-          SfSlider(
-            min: -100,
-            max: 100,
-            value: _value4,
-            showDividers: true,
-            interval: 25,
-            showLabels: true,
-            showTicks: true,
-            stepSize: 25,
-            onChanged: (dynamic newValue) {
-              _value4 = newValue;
-
-              int students = message.babies;
-              changeStudents = students * (1 + (newValue / 100));
-
-              setState(() {});
-            },
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              Text(
-                '(단위: %)',
-                style: TextStyle(fontSize: 12),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
-                child: Text(
-                  '도소매업 신생 기업 수: ${changeCompanies.round()}개',
-                  style:
-                      CustomStyle().secondaryTextStyle(const Color(0xff495464)),
-                ),
-              ),
-            ],
-          ),
-          SfSlider(
-            min: -100,
-            max: 100,
-            value: _value5,
-            showDividers: true,
-            interval: 25,
-            showLabels: true,
-            showTicks: true,
-            stepSize: 25,
-            onChanged: (dynamic newValue) {
-              _value5 = newValue;
-
-              int companies = message.babies;
-              changeCompanies = companies * (1 + (newValue / 100));
-
-              setState(() {});
-            },
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              Text(
-                '(단위: %)',
-                style: TextStyle(fontSize: 12),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 50,
-          ),
-          ElevatedButton(
-            style: CustomStyle().primaryButtonStyle(),
-            onPressed: () async {
-              // 예측 머신러닝
-              await getChangePred();
-              await get80Value();
-
-              Future.delayed(const Duration(seconds: 3), () {
-                setState(() {
-                  onLoad = false;
-                });
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Pred80Result(),
-                    ));
-              });
-            },
-            child: const Text('결과 확인'),
-          ),
+          CustomLoader(onLoad: onLoad)
         ],
       ),
     );
