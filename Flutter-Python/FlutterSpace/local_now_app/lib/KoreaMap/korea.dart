@@ -4,6 +4,9 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:local_now_app/SidoPred/pred80.dart';
 import 'package:local_now_app/models/message_pred80.dart';
 
+import '../widgets/custom_app_bar.dart';
+import '../widgets/custom_style.dart';
+
 class KoreaMap extends StatefulWidget {
   const KoreaMap({super.key});
 
@@ -19,6 +22,11 @@ class _KoreaMapState extends State<KoreaMap> {
         padding: const EdgeInsets.all(8.0),
         child: Stack(
           children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 50, 20, 10),
+              child: Text('80년 후 미래가 궁금한 지역을 선택하세요!',
+                  style: CustomStyle().primaryTextStyle(Colors.teal[900])),
+            ),
             Center(
                 child: Image.asset(
               "images/koreamap.png",
