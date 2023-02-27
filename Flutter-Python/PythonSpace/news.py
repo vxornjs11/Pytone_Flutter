@@ -7,6 +7,7 @@ from flask import Flask, jsonify, request, render_template
 import joblib
 from bs4 import BeautifulSoup
 import urllib.request as req
+import requests
 
 app = Flask(__name__)
 
@@ -67,7 +68,61 @@ def newsChungChung():
     })
 
 
+# 검색 
+lines = '''page: 1
+total: 35528
+box_idxno: 
+sc_area: A
+view_type: sm
+sc_word: 
+'''.splitlines()
+@app.route("/search")
+def search():
+    inputData = request.args.get("search")
+    lines_change = []
+    print(f'lines = ${lines}')
+    for line in lines:
+        line = line.replace(' ','')
+        lines_change.append(line)
 
+    data = {}
+    print('-----------------------------')
+    print(f'lines_change = ${lines_change}')
+    print('-----------------------------')
+    for line in lines_change:
+        key, value = line.split(':',1)
+        data[key] = value
+        
+    data['sc_word'] = inputData
+
+    print(f'data = ${data}')
+    url = 'http://www.ccnnews.co.kr/news/articleList.html?'
+    cungAllNewsurl = 'http://www.ccnnews.co.kr'
+    response = requests.post(url,data=data)
+    html = response.text
+    soup = BeautifulSoup(html,'html.parser')
+
+
+    links = soup.select(".list-titles a")
+    print(f'links = ${links}')
+    newstitles = []
+    newsLinks = []
+    errorList = []
+    setJSONList = []
+    i = 0
+    for link in links:
+        try:  
+            newstitles.append(link.text)
+            newsLinks.append(cungAllNewsurl+link.attrs['href'])
+        except: errorList.append(f'Error number : {str(link)} newsTitle :{link.text}')
+        else:
+            setJSONList.append({newstitles[i]:newsLinks[i]})
+            i += 1
+
+    print(f'setJsonList in py = ${setJSONList}')
+    return jsonify({
+        'result' : setJSONList
+    })
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5001, debug=True)
+    app.run(host="127.0.0.1", port=5000, debug=True)

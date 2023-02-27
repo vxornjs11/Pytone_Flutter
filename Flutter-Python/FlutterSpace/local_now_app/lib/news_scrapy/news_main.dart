@@ -20,9 +20,10 @@ class HomeBody extends StatefulWidget {
   State<HomeBody> createState() => _HomeBodyState();
 }
 
+late TextEditingController serachTextFeild;
 late bool isLoading;
 late int iindex;
-// late String link = "";
+late bool isChungcung;
 List newslist = [];
 List viewList = [];
 String imgNetworkAdress =
@@ -36,7 +37,9 @@ class _HomeBodyState extends State<HomeBody> {
     // implement initState
     super.initState();
     isLoading = false; // for indicator
+    isChungcung = false;
     iindex = 1;
+    serachTextFeild = TextEditingController();
   }
 
   @override
@@ -54,6 +57,7 @@ class _HomeBodyState extends State<HomeBody> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
+                        isChungcung = true;
                         iindex = 0;
                         imgNetworkAdress =
                             'http://www.ccnnews.co.kr/image/logo/toplogo_20190220095446.png';
@@ -69,6 +73,7 @@ class _HomeBodyState extends State<HomeBody> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
+                        isChungcung = false;
                         iindex = 1;
                         imgNetworkAdress =
                             'http://m.kwnews.co.kr/assets/images/common/logo.png';
@@ -95,103 +100,95 @@ class _HomeBodyState extends State<HomeBody> {
                       child: Lottie.network(
                           'https://assets4.lottiefiles.com/packages/lf20_7x45GFUqeu.json'),
                     )
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 25, 0, 10),
-                          child: SizedBox(
-                            child: Image.network(imgNetworkAdress),
+                  : SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 25, 0, 10),
+                            child: SizedBox(
+                              child: Image.network(imgNetworkAdress),
+                            ),
                           ),
-                        ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: viewList.length,
-                          itemBuilder: (context, position) {
-                            return Column(
-                              children: [
-                                GestureDetector(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      (viewList[position].keys)
-                                          .toString()
-                                          .replaceAll(RegExp(reg), ""),
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                    ),
+                          // 충청도 뉴스시에는 검색가능함
+                          isChungcung
+                              ? SizedBox(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.5,
+                                        child: TextField(
+                                          controller: serachTextFeild,
+                                          // decoration: const InputDecoration(
+                                          //   hintText: '비밀번호를 입력하세요.',
+                                          //   enabledBorder: UnderlineInputBorder(
+                                          //     borderSide: BorderSide(
+                                          //         color: Color.fromARGB(
+                                          //             255, 176, 162, 39)),
+                                          //   ),
+                                          //   focusedBorder: UnderlineInputBorder(
+                                          //     borderSide: BorderSide(
+                                          //         color: Color.fromARGB(
+                                          //             255, 176, 162, 39)),
+                                          //   ),
+                                          // ),
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          viewList = [];
+                                          getSearchJSONData(
+                                              serachTextFeild.text);
+                                        },
+                                        child: const Text(
+                                          'Search!',
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  onTap: () {
-                                    String link = (newslist[position].values)
-                                        .toString()
-                                        .replaceAll(
-                                            RegExp('[^a-zA-Z0-9가-힣.=/?:\\s]'),
-                                            "")
-                                        .substring(7);
-                                    ClickedNotice(link);
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                        // SizedBox(
-                        //   child: Text('test'),
-                        // )
-                      ],
+                                )
+                              : SizedBox(),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: viewList.length,
+                            itemBuilder: (context, position) {
+                              return Column(
+                                children: [
+                                  GestureDetector(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        (viewList[position].keys)
+                                            .toString()
+                                            .replaceAll(RegExp(reg), ""),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      String link = (newslist[position].values)
+                                          .toString()
+                                          .replaceAll(
+                                              RegExp('[^a-zA-Z0-9가-힣.=/?:\\s]'),
+                                              "")
+                                          .substring(7);
+                                      ClickedNotice(link);
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                          // SizedBox(
+                          //   child: Text('test'),
+                          // )
+                        ],
+                      ),
                     ),
         ),
-        //       body: Center(
-        //         child: Column(
-        //           mainAxisAlignment: MainAxisAlignment.start,
-        //           children: [
-        //             // TabBarView(
-        //             isLoading
-        //                 ? Center(
-        //                     child: Lottie.network(
-        //                         'https://assets4.lottiefiles.com/packages/lf20_7x45GFUqeu.json'), // 타자치는 애
-        //                   )
-        //                 : Padding(
-        //                     padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
-        //                     child: SizedBox(
-        //                       child: Image.network(imgNetworkAdress),
-        //                     ),
-        //                   ),
-        //             ListView.builder(
-        //               shrinkWrap: true,
-        //               itemCount: viewList.length,
-        //               itemBuilder: (context, position) {
-        //                 return Column(
-        //                   children: [
-        //                     GestureDetector(
-        //                       child: Padding(
-        //                         padding: const EdgeInsets.all(8.0),
-        //                         child: Text(
-        //                           (viewList[position].keys)
-        //                               .toString()
-        //                               .replaceAll(RegExp(reg), ""),
-        //                           overflow: TextOverflow.ellipsis,
-        //                           maxLines: 1,
-        //                         ),
-        //                       ),
-        //                       onTap: () {
-        //                         String link = (newslist[position].values)
-        //                             .toString()
-        //                             .replaceAll(RegExp('[^a-zA-Z0-9가-힣.=/?:\\s]'), "")
-        //                             .substring(7);
-        //                         ClickedNotice(link);
-        //                       },
-        //                     ),
-        //                   ],
-        //                 );
-        //               },
-        //             ),
-        //             SizedBox(
-        //               child: Text('test'),
-        //             )
-        //           ],
-        //         ),
-        //       ),
       ),
     );
   }
@@ -210,7 +207,7 @@ class _HomeBodyState extends State<HomeBody> {
       default:
         break;
     }
-    var url = Uri.parse('http://127.0.0.1:5001/${str}');
+    var url = Uri.parse('http://127.0.0.1:5000/${str}');
     var response = await http.get(url);
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -228,6 +225,29 @@ class _HomeBodyState extends State<HomeBody> {
     }
     isLoading = false;
   } //>> getJSONData(str) async { END
+
+// 충청도 검색
+  getSearchJSONData(str) async {
+    var url = Uri.parse('http://127.0.0.1:5000/search?search=${str}');
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      newslist = dataConvertedJSON['result'];
+    });
+    // _showDialog(context, newslist);
+
+    int i = 0;
+    // while (i < newslist.length) {
+    while (i < 7) {
+      // 8번째 뉴스까지만 보이게 할꺼임
+      // viewList.append(newslist[i]);
+      viewList.add(newslist[i]);
+      i++;
+    }
+    isLoading = false;
+  } //>> getJSONData(str) async { END
+
+//
 
   ClickedNotice(link) {
     // notice 클릭시 웹뷰
