@@ -12,8 +12,8 @@ from sklearn.linear_model import LinearRegression
 
 app = Flask(__name__)
 
-@app.route("/seoul") # spring이랑 거의 비슷함    # @app.route("/__")형식으로 여러개 하면됨
-def seoul():
+@app.route("/seoul_predict") # spring이랑 거의 비슷함    # @app.route("/__")형식으로 여러개 하면됨
+def seoul_predict():
     outPop = float(request.args.get("outPop"))
     birthPop = float(request.args.get("birthPop"))
     obgynPop = float(request.args.get("obgynPop"))
@@ -25,7 +25,7 @@ def seoul():
     return jsonify({'result' : pre[0]}) # pre의 결과를 json으로 넘겨주면 끝임
 
 
-@app.route("/gungu")
+@app.route("/seoul_gungu")
 def seoul_gungu():
     gungu = request.args.get("gungu")
     df = pd.read_csv("./PythonSpace/Data/seoul_pred.csv")
@@ -40,7 +40,7 @@ def seoul_gungu():
 
     return jsonify({'result' : res})
 
-@app.route("/gungu_all")
+@app.route("/seoul_gungu_all")
 def seoul_gungu_all():
     df = pd.read_csv("./PythonSpace/Data/seoul_pred.csv")
     
@@ -62,7 +62,7 @@ def seoul_gungu_all():
 
 # Date: 2023-02-24, sangwonKim7
 # Desc: 각 군구별 '년도에 따른 예측값'에 대한 선형회귀식 구한 후, 기울기와 절편을 Dictionary로 보냄
-@app.route("/gungu_coef_intercept")
+@app.route("/seoul_gungu_coef_intercept")
 def seoul_gungu_coef_intercept():
     df = pd.read_csv("./PythonSpace/Data/seoul_2017_2021_pred.csv")
     

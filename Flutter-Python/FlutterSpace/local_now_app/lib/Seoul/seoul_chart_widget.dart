@@ -144,7 +144,7 @@ class _SeoulChartWidgetState extends State<SeoulChartWidget> {
 
   // --- Functions ---
   getJSONData() async {
-    var url = Uri.parse('http://127.0.0.1:5000/gungu_all');
+    var url = Uri.parse('http://127.0.0.1:5000/seoul_gungu_all');
 
     var response = await http.get(url);
     setState(() {

@@ -34,7 +34,7 @@ class _SurveyResultChartState extends State<SurveyResultChart> {
                 color: const Color(0xffEDEDED),
                 // color: Colors.white,
               ),
-              child: LineChartSample2(),
+              child: const LineChartSample2(),
             ),
             Positioned(
               top: 40,

@@ -231,7 +231,7 @@ class _SeoulState extends State<Seoul> {
 
   // --- Functions ---
   getJSONData() async {
-    var url = Uri.parse('http://127.0.0.1:5000/gungu?gungu=$gungu');
+    var url = Uri.parse('http://127.0.0.1:5000/seoul_gungu?gungu=$gungu');
 
     var response = await http.get(url);
     setState(() {
@@ -243,7 +243,7 @@ class _SeoulState extends State<Seoul> {
   }
 
   getJSONDataAll() async {
-    var url = Uri.parse('http://127.0.0.1:5000/gungu_all');
+    var url = Uri.parse('http://127.0.0.1:5000/seoul_gungu_all');
 
     var response = await http.get(url);
     setState(() {
