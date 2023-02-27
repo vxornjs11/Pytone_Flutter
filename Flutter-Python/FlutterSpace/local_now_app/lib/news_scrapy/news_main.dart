@@ -86,58 +86,61 @@ class _HomeBodyState extends State<HomeBody> {
               ),
             ),
           ),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                // TabBarView(
-                isLoading
-                    ? Center(
-                        child: Lottie.network(
-                            'https://assets4.lottiefiles.com/packages/lf20_7x45GFUqeu.json'), // 타자치는 애
-                      )
-                    : Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
-                        child: SizedBox(
-                          child: Image.network(imgNetworkAdress),
-                        ),
-                      ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: viewList.length,
-                  itemBuilder: (context, position) {
-                    return Column(
+          body:
+              //  Column(
+              //    mainAxisAlignment: MainAxisAlignment.start,
+              //    children: [
+              // TabBarView(
+              isLoading
+                  ? Center(
+                      child: Lottie.network(
+                          'https://assets4.lottiefiles.com/packages/lf20_7x45GFUqeu.json'),
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        GestureDetector(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              (viewList[position].keys)
-                                  .toString()
-                                  .replaceAll(RegExp(reg), ""),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 25, 0, 10),
+                          child: SizedBox(
+                            child: Image.network(imgNetworkAdress),
                           ),
-                          onTap: () {
-                            String link = (newslist[position].values)
-                                .toString()
-                                .replaceAll(
-                                    RegExp('[^a-zA-Z0-9가-힣.=/?:\\s]'), "")
-                                .substring(7);
-                            ClickedNotice(link);
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: viewList.length,
+                          itemBuilder: (context, position) {
+                            return Column(
+                              children: [
+                                GestureDetector(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      (viewList[position].keys)
+                                          .toString()
+                                          .replaceAll(RegExp(reg), ""),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    String link = (newslist[position].values)
+                                        .toString()
+                                        .replaceAll(
+                                            RegExp('[^a-zA-Z0-9가-힣.=/?:\\s]'),
+                                            "")
+                                        .substring(7);
+                                    ClickedNotice(link);
+                                  },
+                                ),
+                              ],
+                            );
                           },
                         ),
+                        // SizedBox(
+                        //   child: Text('test'),
+                        // )
                       ],
-                    );
-                  },
-                ),
-                // SizedBox(
-                //   child: Text('test'),
-                // )
-              ],
-            ),
-          ),
+                    ),
         ),
       ),
     );
