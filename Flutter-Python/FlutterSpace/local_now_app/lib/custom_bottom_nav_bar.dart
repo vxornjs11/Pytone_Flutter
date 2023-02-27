@@ -36,7 +36,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
               Icons.library_books,
               color: Colors.teal[500],
             ),
-            label: 'news',
+            label: 'News',
           ),
           NavigationDestination(
             icon: Icon(
@@ -61,9 +61,9 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
         },
         // backgroundColor: Theme.of(context).primaryColor.withOpacity(0.3),
         // animationDuration: const Duration(seconds: 1),
-        height: 44,
+        height: 46,
         backgroundColor: Theme.of(context).primaryColorLight.withOpacity(0.4),
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+        // labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
       ),
       body: <Widget>[
         const NewsMain(),
