@@ -20,10 +20,12 @@ class HomeBody extends StatefulWidget {
   State<HomeBody> createState() => _HomeBodyState();
 }
 
+DateTime now = DateTime.now();
 late TextEditingController serachTextFeild;
 late bool isLoading;
 late int iindex;
 late bool isChungcung;
+late String timeNow;
 List newslist = [];
 List viewList = [];
 String imgNetworkAdress =
@@ -40,6 +42,7 @@ class _HomeBodyState extends State<HomeBody> {
     isChungcung = false;
     iindex = 1;
     serachTextFeild = TextEditingController();
+    timeNow = "";
   }
 
   @override
@@ -57,6 +60,8 @@ class _HomeBodyState extends State<HomeBody> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
+                        timeNow = now.toString().substring(0, 16);
+                        ;
                         isChungcung = true;
                         iindex = 0;
                         imgNetworkAdress =
@@ -73,6 +78,7 @@ class _HomeBodyState extends State<HomeBody> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
+                        timeNow = now.toString().substring(0, 16);
                         isChungcung = false;
                         iindex = 1;
                         imgNetworkAdress =
@@ -104,6 +110,12 @@ class _HomeBodyState extends State<HomeBody> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(2, 15, 2, 10),
+                            child: SizedBox(
+                              child: Text('뉴스 가져온 시간 : ${timeNow}'),
+                            ),
+                          ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 25, 0, 10),
                             child: SizedBox(

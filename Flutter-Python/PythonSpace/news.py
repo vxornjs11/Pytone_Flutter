@@ -80,22 +80,17 @@ sc_word:
 def search():
     inputData = request.args.get("search")
     lines_change = []
-    print(f'lines = ${lines}')
     for line in lines:
         line = line.replace(' ','')
         lines_change.append(line)
 
     data = {}
-    print('-----------------------------')
-    print(f'lines_change = ${lines_change}')
-    print('-----------------------------')
     for line in lines_change:
         key, value = line.split(':',1)
         data[key] = value
         
     data['sc_word'] = inputData
 
-    print(f'data = ${data}')
     url = 'http://www.ccnnews.co.kr/news/articleList.html?'
     cungAllNewsurl = 'http://www.ccnnews.co.kr'
     response = requests.post(url,data=data)
@@ -104,7 +99,6 @@ def search():
 
 
     links = soup.select(".list-titles a")
-    print(f'links = ${links}')
     newstitles = []
     newsLinks = []
     errorList = []
@@ -119,7 +113,6 @@ def search():
             setJSONList.append({newstitles[i]:newsLinks[i]})
             i += 1
 
-    print(f'setJsonList in py = ${setJSONList}')
     return jsonify({
         'result' : setJSONList
     })
