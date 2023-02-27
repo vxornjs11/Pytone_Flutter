@@ -161,7 +161,7 @@ class _HomeBodyState extends State<HomeBody> {
       default:
         break;
     }
-    var url = Uri.parse('http://127.0.0.1:5001/${str}');
+    var url = Uri.parse('http://127.0.0.1:5000/${str}');
     var response = await http.get(url);
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));

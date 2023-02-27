@@ -63,7 +63,7 @@ class _ResultPageState extends State<ResultPage> {
     var url = Uri.parse(
         'http://127.0.0.1:5000/all?pop=${MessageAnswers.sliderPop * 250000}&babies=${MessageAnswers.sliderBabies * 15000}&doctors=${MessageAnswers.sliderDoctor * 50}&students=${MessageAnswers.sliderEStudent * 100000}&companies=${MessageAnswers.sliderCompanies * 8000}');
     var response = await http.get(url);
-    print(response.body);
+    // print(response.body);
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
       result = dataConvertedJSON['result'];
