@@ -20,8 +20,12 @@ class HomeBody extends StatefulWidget {
   State<HomeBody> createState() => _HomeBodyState();
 }
 
+DateTime now = DateTime.now();
+late TextEditingController serachTextFeild;
 late bool isLoading;
-// late String link = "";
+late int iindex;
+late bool isChungcung;
+late String timeNow;
 List newslist = [];
 List viewList = [];
 String imgNetworkAdress =
@@ -35,113 +39,167 @@ class _HomeBodyState extends State<HomeBody> {
     // implement initState
     super.initState();
     isLoading = false; // for indicator
+    isChungcung = false;
+    iindex = 1;
+    serachTextFeild = TextEditingController();
+    timeNow = "";
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      animationDuration: const Duration(seconds: 1),
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(55.0),
-          child: AppBar(
-            bottom: TabBar(
-              tabs: [
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      imgNetworkAdress =
-                          'http://www.ccnnews.co.kr/image/logo/toplogo_20190220095446.png';
-                      isLoading = true;
-                    });
-                    viewList = [];
-                    getJSONData('충청');
-                  },
-                  child: const Tab(
-                    child: Text(
-                      '충청도 뉴스',
-                      style: TextStyle(
-                        fontSize: 16,
-                        // fontWeight: FontWeight.bold,
-                      ),
+    return MaterialApp(
+      home: DefaultTabController(
+        initialIndex: iindex,
+        length: 2,
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(55.0),
+            child: AppBar(
+              bottom: TabBar(
+                tabs: [
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        timeNow = now.toString().substring(0, 16);
+                        ;
+                        isChungcung = true;
+                        iindex = 0;
+                        imgNetworkAdress =
+                            'http://www.ccnnews.co.kr/image/logo/toplogo_20190220095446.png';
+                        isLoading = true;
+                      });
+                      viewList = [];
+                      getJSONData('충청');
+                    },
+                    child: const Tab(
+                      child: Text('충청도 뉴스'),
                     ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      imgNetworkAdress =
-                          'http://m.kwnews.co.kr/assets/images/common/logo.png';
-                      isLoading = true;
-                    });
-                    viewList = [];
-                    getJSONData('강원');
-                  },
-                  child: const Tab(
-                    child: Text(
-                      '강원도 뉴스',
-                      style: TextStyle(
-                        fontSize: 16,
-                        // fontWeight: FontWeight.bold,
-                      ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        timeNow = now.toString().substring(0, 16);
+                        isChungcung = false;
+                        iindex = 1;
+                        imgNetworkAdress =
+                            'http://m.kwnews.co.kr/assets/images/common/logo.png';
+                        isLoading = true;
+                      });
+                      viewList = [];
+                      getJSONData('강원');
+                    },
+                    child: Tab(
+                      child: Text('강원도 뉴스'),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+          body:
+              //  Column(
+              //    mainAxisAlignment: MainAxisAlignment.start,
+              //    children: [
               // TabBarView(
               isLoading
                   ? Center(
                       child: Lottie.network(
-                          'https://assets4.lottiefiles.com/packages/lf20_7x45GFUqeu.json'), // 타자치는 애
+                          'https://assets4.lottiefiles.com/packages/lf20_7x45GFUqeu.json'),
                     )
-                  : Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
-                      child: SizedBox(
-                        child: Image.network(imgNetworkAdress),
+                  : SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(2, 15, 2, 10),
+                            child: SizedBox(
+                              child: Text('뉴스 가져온 시간 : ${timeNow}'),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 25, 0, 10),
+                            child: SizedBox(
+                              child: Image.network(imgNetworkAdress),
+                            ),
+                          ),
+                          // 충청도 뉴스시에는 검색가능함
+                          isChungcung
+                              ? SizedBox(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.5,
+                                        child: TextField(
+                                          controller: serachTextFeild,
+                                          // decoration: const InputDecoration(
+                                          //   hintText: '비밀번호를 입력하세요.',
+                                          //   enabledBorder: UnderlineInputBorder(
+                                          //     borderSide: BorderSide(
+                                          //         color: Color.fromARGB(
+                                          //             255, 176, 162, 39)),
+                                          //   ),
+                                          //   focusedBorder: UnderlineInputBorder(
+                                          //     borderSide: BorderSide(
+                                          //         color: Color.fromARGB(
+                                          //             255, 176, 162, 39)),
+                                          //   ),
+                                          // ),
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          viewList = [];
+                                          getSearchJSONData(
+                                              serachTextFeild.text);
+                                        },
+                                        child: const Text(
+                                          'Search!',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : SizedBox(),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: viewList.length,
+                            itemBuilder: (context, position) {
+                              return Column(
+                                children: [
+                                  GestureDetector(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        (viewList[position].keys)
+                                            .toString()
+                                            .replaceAll(RegExp(reg), ""),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      String link = (newslist[position].values)
+                                          .toString()
+                                          .replaceAll(
+                                              RegExp('[^a-zA-Z0-9가-힣.=/?:\\s]'),
+                                              "")
+                                          .substring(7);
+                                      ClickedNotice(link);
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                          // SizedBox(
+                          //   child: Text('test'),
+                          // )
+                        ],
                       ),
                     ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: viewList.length,
-                itemBuilder: (context, position) {
-                  return Column(
-                    children: [
-                      GestureDetector(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            (viewList[position].keys)
-                                .toString()
-                                .replaceAll(RegExp(reg), ""),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                        ),
-                        onTap: () {
-                          String link = (newslist[position].values)
-                              .toString()
-                              .replaceAll(RegExp('[^a-zA-Z0-9가-힣.=/?:\\s]'), "")
-                              .substring(7);
-                          ClickedNotice(link);
-                        },
-                      ),
-                    ],
-                  );
-                },
-              ),
-              SizedBox(
-                child: Text('test'),
-              )
-            ],
-          ),
         ),
       ),
     );
@@ -179,6 +237,29 @@ class _HomeBodyState extends State<HomeBody> {
     }
     isLoading = false;
   } //>> getJSONData(str) async { END
+
+// 충청도 검색
+  getSearchJSONData(str) async {
+    var url = Uri.parse('http://127.0.0.1:5000/search?search=${str}');
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      newslist = dataConvertedJSON['result'];
+    });
+    // _showDialog(context, newslist);
+
+    int i = 0;
+    // while (i < newslist.length) {
+    while (i < 7) {
+      // 8번째 뉴스까지만 보이게 할꺼임
+      // viewList.append(newslist[i]);
+      viewList.add(newslist[i]);
+      i++;
+    }
+    isLoading = false;
+  } //>> getJSONData(str) async { END
+
+//
 
   ClickedNotice(link) {
     // notice 클릭시 웹뷰

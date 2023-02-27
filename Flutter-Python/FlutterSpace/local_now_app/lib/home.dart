@@ -99,7 +99,8 @@ class Home extends StatelessWidget {
                     children: [
                       SizedBox(
                         height: deviceHeight / 6,
-                        child: Lottie.network("https://assets1.lottiefiles.com/private_files/lf30_MK1ZRw.json"),
+                        child: Lottie.network(
+                            "https://assets1.lottiefiles.com/private_files/lf30_MK1ZRw.json"),
                         // child: Lottie.asset(
                         //   "assets/city-skyline-building.json",
                         // ),
