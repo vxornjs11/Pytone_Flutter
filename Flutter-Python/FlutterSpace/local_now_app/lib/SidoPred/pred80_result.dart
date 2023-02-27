@@ -25,7 +25,7 @@ class _Pred80ResultState extends State<Pred80Result> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(appBar: AppBar(), title: '전국'),
+      appBar: CustomAppBar(appBar: AppBar(), title: '결과'),
       body: Column(
         children: [
           Stack(
