@@ -189,7 +189,7 @@ class _Pred80State extends State<Pred80> {
               _value2 = newValue;
 
               int babies = message.babies;
-              changeDoctors = babies * (1 + (newValue / 100));
+              changeBabies = babies * (1 + (newValue / 100));
 
               setState(() {});
             },
