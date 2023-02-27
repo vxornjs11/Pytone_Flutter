@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:local_now_app/Model/message_last_values.dart';
-// import 'package:local_now_app/Model/message_sido.dart';
 import 'package:local_now_app/SidoPred/pred80_result.dart';
 import 'package:local_now_app/models/message_pred80.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/message_last_values.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_style.dart';
 
 class Pred80 extends StatefulWidget {
@@ -19,8 +18,8 @@ class Pred80 extends StatefulWidget {
 }
 
 class _Pred80State extends State<Pred80> {
-  // late double result;
   late CollectionReference<Map<String, dynamic>> seoul;
+
   // 슬라이더 값
   late double _value1;
   late double _value2;
@@ -35,7 +34,13 @@ class _Pred80State extends State<Pred80> {
   late num changeDoctors;
   late num changeStudents;
 
+  // 라벨에 값을 한번만 초기화해주기 위해 카운트한다.
   late int count;
+
+  late bool onLoad;
+
+  // 시도별로 다른 모델을 호출하기 위한 변수
+  late String linkSido;
 
   @override
   void initState() {
@@ -53,15 +58,22 @@ class _Pred80State extends State<Pred80> {
     changeStudents = 0;
 
     count = 0;
+
+    onLoad = false;
+
+    linkSido = "";
+    getLinkSido();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(
+          appBar: AppBar(), title: '80년 후 ${MessagePred80.sido}는?'),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('latestValue')
-            .where('sido', isEqualTo: '서울특별시')
+            .where('sido', isEqualTo: MessagePred80.sido)
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -103,19 +115,24 @@ class _Pred80State extends State<Pred80> {
       padding: const EdgeInsets.all(15),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 50),
-            child: Text('80년 후 ${message.sido}는?',
-                style: CustomStyle().primaryTextStyle(Colors.teal[900])),
-          ),
-          // // 위젯 만들면 클릭이 안 되고 바뀌지도 않음..
-          // SizedBox(
-          //   height: 100,
-          //   width: 350,
-          //   child: MySlider(),
+          // Padding(
+          //   padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          //   child: Text('80년 후 ${message.sido}는?',
+          //       style: CustomStyle().primaryTextStyle(Colors.teal[900])),
           // ),
-          Text('예상 전출인구 수: ${changeOutPop.round()}'),
-
+          Padding(
+            padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  '예상 전출인구 수: ${changeOutPop.round()}명',
+                  style:
+                      CustomStyle().secondaryTextStyle(const Color(0xff495464)),
+                ),
+              ],
+            ),
+          ),
           SfSlider(
             min: -100,
             max: 100,
@@ -125,28 +142,40 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
-            onChangeStart: (dynamic startValue) {
-              print('Interaction started');
-            },
             onChanged: (dynamic newValue) {
               _value1 = newValue;
-              print('newValue: ${newValue.round()}');
+
               int outPop = message.outPop;
               changeOutPop = outPop * (1 + (newValue / 100));
 
-              print('change: ${changeOutPop.round()}');
-
               setState(() {});
             },
-            // onChangeEnd: (dynamic endValue) {
-            //   MessageSido.sliderPop = endValue;
-            // },
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Text(
+                '(단위: %)',
+                style: TextStyle(fontSize: 12),
+              ),
+            ],
           ),
           const SizedBox(
             height: 20,
           ),
-          Text('출생아 수: ${changeBabies.round()}'),
-
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+                child: Text(
+                  '출생아 수: ${changeBabies.round()}명',
+                  style:
+                      CustomStyle().secondaryTextStyle(const Color(0xff495464)),
+                ),
+              ),
+            ],
+          ),
           SfSlider(
             min: -100,
             max: 100,
@@ -156,24 +185,41 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
-            onChangeStart: (dynamic startValue) {
-              print('Interaction started');
-            },
             onChanged: (dynamic newValue) {
-              setState(() {
-                _value2 = newValue;
-              });
+              _value2 = newValue;
+
+              int babies = message.babies;
+              changeDoctors = babies * (1 + (newValue / 100));
+
+              setState(() {});
             },
-            // onChangeEnd: (dynamic endValue) {
-            //   MessageSido.sliderBabies = endValue;
-            // },
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Text(
+                '(단위: %)',
+                style: TextStyle(fontSize: 12),
+              ),
+            ],
+          ),
+
           const SizedBox(
             height: 20,
           ),
-
-          Text('산부인과 의원 수: ${changeDoctors.round()}'),
-
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+                child: Text(
+                  '산부인과 의원 수: ${changeDoctors.round()}개',
+                  style:
+                      CustomStyle().secondaryTextStyle(const Color(0xff495464)),
+                ),
+              ),
+            ],
+          ),
           SfSlider(
             min: -100,
             max: 100,
@@ -183,9 +229,6 @@ class _Pred80State extends State<Pred80> {
             showLabels: true,
             showTicks: true,
             stepSize: 25,
-            onChangeStart: (dynamic startValue) {
-              print('Interaction started');
-            },
             onChanged: (dynamic newValue) {
               _value3 = newValue;
 
@@ -194,16 +237,33 @@ class _Pred80State extends State<Pred80> {
 
               setState(() {});
             },
-            // onChangeEnd: (dynamic endValue) {
-            //   MessageSido.sliderDoctor = endValue;
-            // },
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Text(
+                '(단위: %)',
+                style: TextStyle(fontSize: 12),
+              ),
+            ],
           ),
           const SizedBox(
             height: 20,
           ),
 
-          Text('초등학생 인원 수: ${changeStudents.round()}'),
-
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+                child: Text(
+                  '초등학생 인원 수: ${changeStudents.round()}명',
+                  style:
+                      CustomStyle().secondaryTextStyle(const Color(0xff495464)),
+                ),
+              ),
+            ],
+          ),
           SfSlider(
             min: -100,
             max: 100,
@@ -222,12 +282,32 @@ class _Pred80State extends State<Pred80> {
               setState(() {});
             },
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Text(
+                '(단위: %)',
+                style: TextStyle(fontSize: 12),
+              ),
+            ],
+          ),
           const SizedBox(
             height: 20,
           ),
 
-          Text('도소매업 신생 기업 수: ${changeCompanies.round()}'),
-
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+                child: Text(
+                  '도소매업 신생 기업 수: ${changeCompanies.round()}개',
+                  style:
+                      CustomStyle().secondaryTextStyle(const Color(0xff495464)),
+                ),
+              ),
+            ],
+          ),
           SfSlider(
             min: -100,
             max: 100,
@@ -246,6 +326,15 @@ class _Pred80State extends State<Pred80> {
               setState(() {});
             },
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Text(
+                '(단위: %)',
+                style: TextStyle(fontSize: 12),
+              ),
+            ],
+          ),
           const SizedBox(
             height: 50,
           ),
@@ -256,19 +345,73 @@ class _Pred80State extends State<Pred80> {
               await getChangePred();
               await get80Value();
 
-              // 결과 페이지로 넘어감
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return Pred80Result();
-                },
-              ));
+              Future.delayed(const Duration(seconds: 3), () {
+                setState(() {
+                  onLoad = false;
+                });
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Pred80Result(),
+                    ));
+              });
             },
             child: const Text('결과 확인'),
           ),
-          // LineChartSample6(),
         ],
       ),
     );
+  }
+
+  // 시도별로 다른 함수 이름을 리턴
+  getLinkSido() {
+    List<String> strSidos = [
+      '경기도',
+      '서울특별시',
+      '경상남도',
+      '부산광역시',
+      '대구광역시',
+      '인천광역시',
+      '전라북도',
+      '경상북도',
+      '광주광역시',
+      '충청남도',
+      '전라남도',
+      '울산광역시',
+      '충청북도',
+      '대전광역시',
+      '강원도',
+      '제주특별자치도'
+    ];
+
+    List<String> linkSidos = [
+      'gyeonggi',
+      'seoul',
+      'gyeongnam',
+      'busan',
+      'daegu',
+      'incheon',
+      'jeollabuk',
+      'gyeongbuk',
+      'gwangju',
+      'chungnam',
+      'jeollanam',
+      'ulsan',
+      'chungbuk',
+      'deajeon',
+      'gangwon',
+      'jeju'
+    ];
+
+    int index = 0;
+
+    for (var sido in strSidos) {
+      if (MessagePred80.sido == sido) {
+        linkSido = linkSidos[index];
+        break;
+      }
+      index += 1;
+    }
   }
 
   // 입력값 넣어서 예측값 도출하는 머신러닝 함수
@@ -282,17 +425,13 @@ class _Pred80State extends State<Pred80> {
 
     MessagePred80.change80 = result;
 
-    print('get: $changeOutPop');
-    print('예측값: ${result}');
-
     setState(() {});
-    // print('change80: ${result}');
   }
 
   // 이대로 변하지 않으면 80년 뒤에 예측되는 값
   get80Value() async {
     Map<String, dynamic> result;
-    var url = Uri.parse('http://localhost:5000/seoul?year=2103');
+    var url = Uri.parse('http://localhost:5000/$linkSido?year=2103');
     var response = await http.get(url);
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
     result = dataConvertedJSON['result'];

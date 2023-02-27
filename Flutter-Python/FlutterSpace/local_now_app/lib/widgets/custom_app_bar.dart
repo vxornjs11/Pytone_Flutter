@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+//
+// Create on 2023-02-23
+// author: Sangwon Kim
+// Description: AppBar 위젯
+//
+
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final AppBar appBar;
   final String title;

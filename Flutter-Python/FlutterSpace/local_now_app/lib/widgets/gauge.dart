@@ -32,23 +32,23 @@ class _GaugeState extends State<Gauge> {
               endAngle: 0,
               tickOffset: 25,
               pointers: <GaugePointer>[
-                MarkerPointer(
-                    value: MessagePred80.pred80,
-                    markerType: MarkerType.image,
-                    markerHeight: 30,
-                    markerWidth: 20,
-                    imageUrl: 'images/marker2.png'),
+                // MarkerPointer(
+                //     value: MessagePred80.pred80,
+                //     markerType: MarkerType.image,
+                //     markerHeight: 30,
+                //     markerWidth: 20,
+                //     imageUrl: 'images/marker2.png'),
                 NeedlePointer(
                   value: MessagePred80.change80,
                 ),
                 // 80년 뒤 소멸 위험도
-                // MarkerPointer(
-                //   value: MessagePred80.pred80,
-                //   markerHeight: 20,
-                //   markerWidth: 20,
-                //   elevation: 4,
-                //   color: Colors.black,
-                // )
+                MarkerPointer(
+                  value: MessagePred80.pred80,
+                  markerHeight: 20,
+                  markerWidth: 20,
+                  elevation: 4,
+                  color: Colors.black,
+                )
               ],
               ranges: <GaugeRange>[
                 GaugeRange(
